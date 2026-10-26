@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Expo & React Native
+.expo/
+dist/
+web-build/
+mobile-app/android/
+mobile-app/ios/
+expo-env.d.ts
+
+# Testing
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System
+.DS_Store
+*.pem
+
+# Credentials & signing
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision

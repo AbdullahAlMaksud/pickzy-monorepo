@@ -1,0 +1,45 @@
+{
+  "appName": "Pickzy",
+  "tabs": {
+    "home": "হোম",
+    "history": "ইতিহাস",
+    "profile": "প্রোফাইল"
+  },
+  "back": "পেছনে",
+  "close": "বন্ধ করুন",
+  "cancel": "বাতিল",
+  "confirm": "নিশ্চিত করুন",
+  "save": "সংরক্ষণ",
+  "delete": "মুছুন",
+  "remove": "সরান",
+  "add": "যোগ করুন",
+  "edit": "সম্পাদনা",
+  "done": "সম্পন্ন",
+  "apply": "প্রয়োগ করুন",
+  "yes": "হ্যাঁ",
+  "no": "না",
+  "optional": "ঐচ্ছিক",
+  "loading": "লোড হচ্ছে…",
+  "tryAgain": "আবার চেষ্টা করুন",
+  "clearSearch": "অনুসন্ধান মুছুন",
+  "search": "অনুসন্ধান",
+  "participants_one": "{{count, localeNumber}} জন অংশগ্রহণকারী",
+  "participants_other": "{{count, localeNumber}} জন অংশগ্রহণকারী",
+  "winners_one": "{{count, localeNumber}} জন বিজয়ী",
+  "winners_other": "{{count, localeNumber}} জন বিজয়ী",
+  "projects_one": "{{count, localeNumber}}টি প্রজেক্ট",
+  "projects_other": "{{count, localeNumber}}টি প্রজেক্ট",
+  "selected": "{{count, localeNumber}}টি নির্বাচিত",
+  "errors": {
+    "generic": "কিছু একটা ভুল হয়েছে",
+    "database": "Pickzy তার স্থানীয় ডেটা খুলতে পারেনি। অনুগ্রহ করে অ্যাপটি বন্ধ করে আবার খুলুন।",
+    "newerSchema": "এই ডেটা Pickzy-এর নতুন সংস্করণে সংরক্ষিত হয়েছে। চালিয়ে যেতে অ্যাপটি আপডেট করুন।",
+    "saveFailed": "আপনার পরিবর্তনগুলো সংরক্ষণ করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।",
+    "loadFailed": "তথ্যটি লোড করা যায়নি।",
+    "notFound": "আপনি যা খুঁজছিলেন তা পাওয়া যায়নি।"
+  },
+  "startup": {
+    "title": "Pickzy চালু করা যাচ্ছে না",
+    "retry": "আবার চেষ্টা করুন"
+  }
+}

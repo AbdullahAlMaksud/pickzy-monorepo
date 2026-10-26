@@ -1,0 +1,133 @@
+{
+  "list": {
+    "title": "My Projects",
+    "search": "Search projects",
+    "emptySearch": "No projects match your search.",
+    "empty": "You have no projects yet."
+  },
+  "new": {
+    "title": "New Project",
+    "details": "Project Details",
+    "name": "Project Name",
+    "namePlaceholder": "e.g. Team Lunch",
+    "description": "Description (optional)",
+    "descriptionPlaceholder": "e.g. Let's pick one person for lunch!",
+    "participantsSection": "Add Participants",
+    "create": "Create Project ({{count, localeNumber}})",
+    "creating": "Creating…",
+    "created": "Project created"
+  },
+  "tabs": {
+    "manual": "Type Manually",
+    "import": "Upload File"
+  },
+  "add": {
+    "placeholder": "Enter a name and tap add",
+    "multiHint": "Tip: paste several names, one per line.",
+    "button": "Add",
+    "listTitle": "Participants ({{count, localeNumber}})",
+    "empty": "No participants yet. Add names above or upload a file.",
+    "searchPlaceholder": "Search participants",
+    "noMatches": "No participants match your search.",
+    "clearAll": "Clear all",
+    "clearAllTitle": "Clear all participants?",
+    "clearAllMessage": "This removes every name from the list. This can't be undone.",
+    "clearAllConfirm": "Clear all",
+    "removeOne": "Remove {{name}}",
+    "editOne": "Edit {{name}}",
+    "emptyName": "Please type a name first."
+  },
+  "duplicates": {
+    "title": "Duplicate names",
+    "keep": "Keep duplicates",
+    "skip": "Skip duplicates",
+    "keepHint": "Every name is added, even if it appears more than once.",
+    "skipHint": "Names that already exist (ignoring capitals) are left out. You'll see how many."
+  },
+  "summary": {
+    "added": "Added {{count, localeNumber}} names",
+    "addedOne": "Added 1 name",
+    "skipped": "{{count, localeNumber}} duplicates skipped",
+    "keptDuplicates": "{{count, localeNumber}} duplicates kept",
+    "blank": "{{count, localeNumber}} blank lines ignored",
+    "shortened": "{{count, localeNumber}} long names shortened",
+    "nothingAdded": "Nothing was added."
+  },
+  "validation": {
+    "nameRequired": "Please enter a project name.",
+    "nameTooLong": "The project name is too long (max {{max, localeNumber}} characters).",
+    "descriptionTooLong": "The description is too long (max {{max, localeNumber}} characters).",
+    "participantsEmpty": "Add at least one participant to continue."
+  },
+  "import": {
+    "title": "Import participants",
+    "dropTitle": "Upload a file",
+    "supports": "Supports .txt, .csv or .xlsx",
+    "choose": "Choose File",
+    "reading": "Reading file…",
+    "file": "File",
+    "sheet": "Worksheet",
+    "column": "Name column",
+    "columnOption": "{{label}} ({{count, localeNumber}} filled)",
+    "hasHeader": "First row is a header",
+    "headerSkipped": "Skipped header: “{{name}}”",
+    "previewTitle": "Preview ({{count, localeNumber}} names)",
+    "stats": {
+      "rows": "Rows read",
+      "valid": "Valid names",
+      "blank": "Blank rows skipped",
+      "duplicates": "Duplicates found"
+    },
+    "confirm": "Add {{count, localeNumber}} names",
+    "nothingToImport": "No names found in this selection.",
+    "moreRows": "+ {{count, localeNumber}} more",
+    "errors": {
+      "UNSUPPORTED_TYPE": "This file type isn't supported. Please choose a .xlsx, .csv or .txt file.",
+      "LEGACY_XLS": "Old Excel (.xls) files can't be read. Save the sheet as .xlsx or .csv and try again.",
+      "FILE_TOO_LARGE": "This file is too large. Try a smaller file or export it as CSV or TXT.",
+      "EMPTY_FILE": "This file is empty.",
+      "CORRUPT_FILE": "This file looks damaged and couldn't be opened. Try saving it again, or use CSV or TXT instead.",
+      "BAD_ENCODING": "The text in this file couldn't be read. Save it as UTF-8 and try again.",
+      "UNSUPPORTED_WORKBOOK": "This workbook has a structure Pickzy can't read. Please export the sheet as CSV or TXT and try again.",
+      "NO_VALID_ROWS": "No names were found in this file.",
+      "READ_FAILED": "The file couldn't be opened. Please try again or pick a different file."
+    }
+  },
+  "manage": {
+    "title": "Participants",
+    "subtitle": "{{name}}",
+    "addTitle": "Add participants",
+    "importMore": "Import from file",
+    "select": "Select",
+    "selectAll": "Select all",
+    "clearSelection": "Clear selection",
+    "deleteSelected": "Delete selected",
+    "deleteSelectedTitle": "Delete {{count, localeNumber}} selected?",
+    "deleteSelectedMessage": "They will be removed from this project's list. Past draws in History keep their own copy of the names.",
+    "moveUp": "Move {{name}} up",
+    "moveDown": "Move {{name}} down",
+    "editTitle": "Edit participant",
+    "editLabel": "Name",
+    "clearList": "Clear list",
+    "clearListTitle": "Clear the whole list?",
+    "clearListMessage": "Every participant will be removed from this project. Past draws in History are not changed.",
+    "removed": "Removed {{count, localeNumber}} participants",
+    "removedOne": "Removed 1 participant",
+    "cleared": "List cleared",
+    "renamed": "Name updated",
+    "empty": "This project has no participants.",
+    "projectNotFound": "This project no longer exists.",
+    "toggleSelect": "Select {{name}}",
+    "saved": "Saved",
+    "drawNote": "Changing the list restarts any unfinished draw. Finished draws are never changed.",
+    "editProject": "Edit project",
+    "projectNameLabel": "Project name",
+    "deleteProject": "Delete project",
+    "deleteProjectTitle": "Delete this project?",
+    "deleteProjectMessage": "The project and its participant list will be deleted. Finished draws stay in History.",
+    "deleted": "Project deleted",
+    "updated": "Project updated",
+    "reorder": "Reorder",
+    "startSpinning": "Start Spinning"
+  }
+}

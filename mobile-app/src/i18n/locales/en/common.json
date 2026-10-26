@@ -1,0 +1,45 @@
+{
+  "appName": "Pickzy",
+  "tabs": {
+    "home": "Home",
+    "history": "History",
+    "profile": "Profile"
+  },
+  "back": "Back",
+  "close": "Close",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "save": "Save",
+  "delete": "Delete",
+  "remove": "Remove",
+  "add": "Add",
+  "edit": "Edit",
+  "done": "Done",
+  "apply": "Apply",
+  "yes": "Yes",
+  "no": "No",
+  "optional": "optional",
+  "loading": "Loading…",
+  "tryAgain": "Try again",
+  "clearSearch": "Clear search",
+  "search": "Search",
+  "participants_one": "{{count, localeNumber}} participant",
+  "participants_other": "{{count, localeNumber}} participants",
+  "winners_one": "{{count, localeNumber}} winner",
+  "winners_other": "{{count, localeNumber}} winners",
+  "projects_one": "{{count, localeNumber}} project",
+  "projects_other": "{{count, localeNumber}} projects",
+  "selected": "{{count, localeNumber}} selected",
+  "errors": {
+    "generic": "Something went wrong",
+    "database": "Pickzy couldn't open its local storage. Please close and reopen the app.",
+    "newerSchema": "This data was saved by a newer version of Pickzy. Please update the app to continue.",
+    "saveFailed": "Your changes could not be saved. Please try again.",
+    "loadFailed": "This information could not be loaded.",
+    "notFound": "We couldn't find what you were looking for."
+  },
+  "startup": {
+    "title": "Pickzy can't start",
+    "retry": "Try again"
+  }
+}

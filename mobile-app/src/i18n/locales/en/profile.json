@@ -1,0 +1,66 @@
+{
+  "title": "Profile",
+  "defaultName": "Your name",
+  "name": "Display name",
+  "namePlaceholder": "How should we greet you?",
+  "save": "Save profile",
+  "saved": "Profile saved",
+  "changePhoto": "Change photo",
+  "removePhoto": "Remove photo",
+  "photoUpdated": "Photo updated",
+  "photoRemoved": "Photo removed",
+  "photoError": "The photo couldn't be saved. Please try another one.",
+  "photoPermission": "Allow photo access in Settings to choose a profile picture.",
+  "photoMissing": "Your photo couldn't be found, so the default picture is shown.",
+  "sectionAppearance": "Appearance",
+  "sectionPreferences": "Preferences",
+  "sectionAbout": "About",
+  "theme": "Theme",
+  "font": "Font Style",
+  "language": "Language",
+  "chooseTheme": "Choose Theme",
+  "chooseFont": "Choose Font",
+  "chooseLanguage": "Choose Language",
+  "themes": {
+    "system": {
+      "name": "System",
+      "hint": "Use device theme"
+    },
+    "light": {
+      "name": "Light",
+      "hint": "Clean and minimal"
+    },
+    "dark": {
+      "name": "Dark",
+      "hint": "Easy on the eyes"
+    },
+    "colorful": {
+      "name": "Colorful",
+      "hint": "Vibrant and playful"
+    }
+  },
+  "fonts": {
+    "inter": "Modern and clean",
+    "poppins": "Friendly and modern",
+    "roboto": "Classic and readable",
+    "nunito": "Soft and elegant",
+    "opensans": "Simple and clear",
+    "bengaliNote": "Bengali text always uses Noto Sans Bengali."
+  },
+  "languages": {
+    "en": "English",
+    "bn": "বাংলা"
+  },
+  "haptics": "Haptic feedback",
+  "hapticsHint": "Gentle vibrations when you tap and spin",
+  "confetti": "Celebration confetti",
+  "confettiHint": "Show confetti when a winner is revealed",
+  "offline": {
+    "title": "Works offline",
+    "message": "Your projects, participants and results are stored only on this device. Pickzy needs no account and no internet connection."
+  },
+  "about": {
+    "version": "Version {{version}}",
+    "title": "About Pickzy"
+  }
+}
