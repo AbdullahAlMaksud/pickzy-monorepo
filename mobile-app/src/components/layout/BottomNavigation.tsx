@@ -2,10 +2,9 @@ import type { BottomTabBarProps } from 'expo-router/js-tabs';
 import { Image, Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
-import navBgImage from '@/assets/images/Artboard-1 (1).png';
+import { navBgImage } from '@/assets';
 import { haptic } from '@/utils/haptics';
-import { AppText } from '../ui/AppText';
-import { Icon, type IconName } from '../ui/Icon';
+import { AppText, Icon, type IconName } from '../ui';
 
 const TAB_ICONS: Record<string, { icon: IconName; labelKey: string }> = {
   index: { icon: 'house', labelKey: 'tabs.home' },

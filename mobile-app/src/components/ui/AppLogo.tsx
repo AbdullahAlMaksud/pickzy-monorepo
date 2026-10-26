@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Image, type ImageStyle, type StyleProp } from 'react-native';
-import logoSource from '@/assets/icon/icon-big.png';
+import { logoBig as logoSource } from '@/assets';
 
 interface AppLogoProps {
   size?: number;

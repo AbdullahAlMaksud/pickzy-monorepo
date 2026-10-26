@@ -3,16 +3,17 @@ import { useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
-import { ScreenHeader } from '@/components/layout/ScreenHeader';
-import { SafeScreen } from '@/components/layout/SafeScreen';
-import { AppButton } from '@/components/ui/AppButton';
-import { AppCard } from '@/components/ui/AppCard';
-import { AppInput } from '@/components/ui/AppInput';
-import { AppLogo } from '@/components/ui/AppLogo';
-import { AppSwitch } from '@/components/ui/AppSwitch';
-import { AppText } from '@/components/ui/AppText';
-import { Avatar } from '@/components/ui/Avatar';
-import { Icon } from '@/components/ui/Icon';
+import { SafeScreen, ScreenHeader } from '@/components/layout';
+import {
+  AppButton,
+  AppCard,
+  AppInput,
+  AppLogo,
+  AppSwitch,
+  AppText,
+  Avatar,
+  Icon,
+} from '@/components/ui';
 import { showToast } from '@/store/toastStore';
 import { SettingRow } from '@/features/wheel/components/SettingRow';
 import { SettingsGroup } from '@/features/wheel/components/SettingsGroup';

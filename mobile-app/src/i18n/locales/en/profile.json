@@ -45,7 +45,9 @@
     "roboto": "Classic and readable",
     "nunito": "Soft and elegant",
     "opensans": "Simple and clear",
-    "bengaliNote": "Bengali text always uses Noto Sans Bengali."
+    "anekbangla": "Modern and expressive Bengali",
+    "notosansbengali": "Clear and readable Bengali",
+    "bengaliNote": "Bengali text pairs Anek Bangla for titles and Noto Sans Bengali for body."
   },
   "languages": {
     "en": "English",

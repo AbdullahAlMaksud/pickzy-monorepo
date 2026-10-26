@@ -72,6 +72,7 @@ function AppTextBase({
     locale,
     weight: resolvedWeight,
     text: extractText(children),
+    variant,
   });
   const size = FONT_SIZE[variant];
   const lineHeight = Math.round(

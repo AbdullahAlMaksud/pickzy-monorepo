@@ -1,6 +1,13 @@
 import type { FontWeightName } from './tokens';
 
-export type FontKey = 'inter' | 'poppins' | 'roboto' | 'nunito' | 'opensans';
+export type FontKey =
+  | 'inter'
+  | 'poppins'
+  | 'roboto'
+  | 'nunito'
+  | 'opensans'
+  | 'anekbangla'
+  | 'notosansbengali';
 
 export interface FontOption {
   key: FontKey;
@@ -21,6 +28,18 @@ export const FONT_OPTIONS: readonly FontOption[] = [
     label: 'Open Sans',
     prefix: 'OpenSans',
     descriptionKey: 'profile:fonts.opensans',
+  },
+  {
+    key: 'anekbangla',
+    label: 'Anek Bangla',
+    prefix: 'AnekBangla',
+    descriptionKey: 'profile:fonts.anekbangla',
+  },
+  {
+    key: 'notosansbengali',
+    label: 'Noto Sans Bengali',
+    prefix: 'NotoSansBengali',
+    descriptionKey: 'profile:fonts.notosansbengali',
   },
 ] as const;
 
@@ -47,6 +66,9 @@ export function containsBengali(text: string | undefined | null): boolean {
 }
 
 export const BENGALI_FONT_PREFIX = 'NotoSansBengali';
+export const BENGALI_DISPLAY_FONT_PREFIX = 'AnekBangla';
+
+export type TextVariantRole = 'display' | 'title' | 'heading' | 'body' | 'label' | 'caption' | 'micro';
 
 export interface ResolveFontInput {
   fontKey: FontKey;
@@ -54,20 +76,36 @@ export interface ResolveFontInput {
   weight: FontWeightName;
   /** When the text itself contains Bengali characters the Bengali family is always used. */
   text?: string | null;
+  /** Variant role: display/title/heading use Anek Bangla; body/caption/label use Noto Sans Bengali. */
+  variant?: TextVariantRole;
 }
 
 /**
  * Picks the bundled font family for a piece of text.
  *
- * Latin fonts such as Inter or Poppins have no Bengali glyphs, so whenever the UI language is
- * Bengali (or the text itself contains Bengali characters, e.g. imported participant names in an
- * English UI) we use Noto Sans Bengali, which also contains Latin glyphs.
+ * For Bengali text (or Bengali UI), Anek Bangla is paired for headings/display titles,
+ * and Noto Sans Bengali is paired for body text and micro/captions.
+ * When the user selects a specific font key (like 'anekbangla' or 'notosansbengali'),
+ * that choice is honored.
  */
-export function resolveFontFamily({ fontKey, locale, weight, text }: ResolveFontInput): string {
+export function resolveFontFamily({ fontKey, locale, weight, text, variant }: ResolveFontInput): string {
   const useBengali = locale === 'bn' || containsBengali(text);
-  const prefix = useBengali
-    ? BENGALI_FONT_PREFIX
-    : (FONT_OPTIONS.find((f) => f.key === fontKey)?.prefix ?? 'Inter');
+  let prefix: string;
+
+  if (useBengali) {
+    if (fontKey === 'anekbangla') {
+      prefix = 'AnekBangla';
+    } else if (fontKey === 'notosansbengali') {
+      prefix = 'NotoSansBengali';
+    } else if (variant === 'display' || variant === 'title' || variant === 'heading') {
+      prefix = BENGALI_DISPLAY_FONT_PREFIX;
+    } else {
+      prefix = BENGALI_FONT_PREFIX;
+    }
+  } else {
+    prefix = FONT_OPTIONS.find((f) => f.key === fontKey)?.prefix ?? 'Inter';
+  }
+
   return `${prefix}_${WEIGHT_SUFFIX[weight]}`;
 }
 

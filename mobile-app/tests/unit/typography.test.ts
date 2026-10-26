@@ -11,8 +11,16 @@ describe('font resolution', () => {
 
   it('always uses a Bengali-capable family in the Bengali UI', () => {
     for (const f of FONT_OPTIONS) {
-      expect(resolveFontFamily({ fontKey: f.key, locale: 'bn', weight: 'medium' })).toBe('NotoSansBengali_500Medium');
+      const expected = f.key === 'anekbangla' ? 'AnekBangla_500Medium' : 'NotoSansBengali_500Medium';
+      expect(resolveFontFamily({ fontKey: f.key, locale: 'bn', weight: 'medium' })).toBe(expected);
     }
+  });
+
+  it('pairs Anek Bangla for headings/display and Noto Sans Bengali for body in Bengali UI', () => {
+    expect(resolveFontFamily({ fontKey: 'inter', locale: 'bn', weight: 'bold', variant: 'display' })).toBe('AnekBangla_700Bold');
+    expect(resolveFontFamily({ fontKey: 'inter', locale: 'bn', weight: 'semibold', variant: 'heading' })).toBe('AnekBangla_600SemiBold');
+    expect(resolveFontFamily({ fontKey: 'inter', locale: 'bn', weight: 'medium', variant: 'title' })).toBe('AnekBangla_500Medium');
+    expect(resolveFontFamily({ fontKey: 'inter', locale: 'bn', weight: 'regular', variant: 'body' })).toBe('NotoSansBengali_400Regular');
   });
 
   it('switches to the Bengali family for Bengali text inside the English UI (imported names)', () => {
@@ -23,12 +31,14 @@ describe('font resolution', () => {
 
   it('validates font keys', () => {
     expect(isFontKey('inter')).toBe(true);
+    expect(isFontKey('anekbangla')).toBe(true);
+    expect(isFontKey('notosansbengali')).toBe(true);
     expect(isFontKey('comic')).toBe(false);
     expect(isFontKey(undefined)).toBe(false);
   });
 
   it('every font option has all four weights registered and bundled on disk', () => {
-    const prefixes = [...FONT_OPTIONS.map((f) => f.prefix), 'NotoSansBengali'];
+    const prefixes = [...new Set([...FONT_OPTIONS.map((f) => f.prefix), 'NotoSansBengali', 'AnekBangla'])];
     for (const prefix of prefixes) {
       for (const family of familyNamesFor(prefix)) {
         expect(FONT_FILES[prefix]).toHaveProperty(family);

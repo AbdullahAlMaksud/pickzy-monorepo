@@ -1,6 +1,6 @@
 import * as Font from 'expo-font';
 import { FONT_FILES } from './fontAssets';
-import { BENGALI_FONT_PREFIX, FONT_OPTIONS, type FontKey } from './typography';
+import { BENGALI_DISPLAY_FONT_PREFIX, BENGALI_FONT_PREFIX, FONT_OPTIONS, type FontKey } from './typography';
 
 const loaded = new Set<string>();
 const inflight = new Map<string, Promise<void>>();
@@ -26,7 +26,11 @@ export function loadFontFamily(prefix: string): Promise<void> {
 /** Bengali is always needed (language switch, Bengali participant names); the selected Latin font next. */
 export async function loadFontsForKey(fontKey: FontKey): Promise<void> {
   const prefix = FONT_OPTIONS.find((f) => f.key === fontKey)?.prefix ?? 'Inter';
-  await Promise.all([loadFontFamily(BENGALI_FONT_PREFIX), loadFontFamily(prefix)]);
+  await Promise.all([
+    loadFontFamily(BENGALI_FONT_PREFIX),
+    loadFontFamily(BENGALI_DISPLAY_FONT_PREFIX),
+    loadFontFamily(prefix),
+  ]);
 }
 
 /** Preloads the remaining families in the background so the font picker previews are instant. */

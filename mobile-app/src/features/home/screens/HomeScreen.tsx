@@ -3,19 +3,21 @@ import { useCallback } from 'react';
 import { Image, Pressable, ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
-import { ScreenContainer } from '@/components/layout/ScreenContainer';
-import { AppLogo } from '@/components/ui/AppLogo';
-import { AppText } from '@/components/ui/AppText';
-import { Avatar } from '@/components/ui/Avatar';
-import { EmptyState } from '@/components/ui/EmptyState';
-import { ErrorView } from '@/components/ui/ErrorView';
-import { LoadingView } from '@/components/ui/LoadingView';
-import { SectionHeader } from '@/components/ui/SectionHeader';
+import { ScreenContainer } from '@/components/layout';
+import {
+  AppLogo,
+  AppText,
+  Avatar,
+  EmptyState,
+  ErrorView,
+  LoadingView,
+  SectionHeader,
+} from '@/components/ui';
+import { navBgImage } from '@/assets';
 import { useAsyncQuery } from '@/hooks/useAsyncQuery';
 import { useLocale } from '@/hooks/useLocale';
 import { useAppStore } from '@/store/appStore';
 import { dayPartOf } from '@/utils/format';
-import navBgImage from '@/assets/images/Artboard-1 (1).png';
 import { ActionCard } from '../components/ActionCard';
 import { ProjectListItem } from '../components/ProjectListItem';
 import { StatCard } from '../components/StatCard';
