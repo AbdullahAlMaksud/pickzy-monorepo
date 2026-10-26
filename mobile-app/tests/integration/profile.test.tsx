@@ -48,4 +48,23 @@ describe('Profile screen', () => {
     await fireEvent(screen.getByTestId('switch-confetti'), 'valueChange', false);
     await waitFor(async () => expect((await services.preferences.load()).confetti).toBe(false));
   });
+
+  it('renders remove photo button when photo exists and removes photo on press', async () => {
+    const { services } = await setupApp();
+    useAppStore.setState((s) => ({
+      ...s,
+      preferences: { ...s.preferences, photoUri: 'file:///avatar.png' },
+    }));
+
+    await renderWithApp(<ProfileScreen />, services);
+
+    expect(screen.getByTestId('change-photo')).toBeTruthy();
+    expect(screen.getByTestId('remove-photo')).toBeTruthy();
+
+    await fireEvent.press(screen.getByTestId('remove-photo'));
+
+    await waitFor(async () => {
+      expect((await services.preferences.load()).photoUri).toBeNull();
+    });
+  });
 });

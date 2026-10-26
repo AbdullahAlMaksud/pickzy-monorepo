@@ -96,7 +96,7 @@ export function ProfileScreen() {
         <Avatar name={preferences.displayName} photoUri={photoUri} size={104} testID="profile-avatar" />
         <View style={styles.photoActions}>
           <AppButton label={t('profile:changePhoto')} variant="secondary" compact fullWidth={false} icon="camera" loading={busyPhoto} onPress={changePhoto} testID="change-photo" />
-          {photoUri ? <AppButton label={t('profile:removePhoto')} variant="ghost" compact fullWidth={false} onPress={removePhoto} /> : null}
+          {photoUri ? <AppButton label={t('profile:removePhoto')} variant="ghost" compact fullWidth={false} onPress={removePhoto} testID="remove-photo" /> : null}
         </View>
       </View>
 
@@ -212,7 +212,13 @@ export function ProfileScreen() {
 
 const styles = StyleSheet.create((theme) => ({
   hero: { alignItems: 'center', gap: theme.spacing.md },
-  photoActions: { flexDirection: 'row', alignItems: 'center', gap: theme.spacing.sm },
+  photoActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: theme.spacing.sm,
+  },
   saveRow: { marginTop: theme.spacing.md },
   offline: { flexDirection: 'row', gap: theme.spacing.md, alignItems: 'flex-start' },
   offlineText: { flex: 1, gap: 2 },

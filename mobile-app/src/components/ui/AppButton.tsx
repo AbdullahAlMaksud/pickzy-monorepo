@@ -87,7 +87,6 @@ const styles = StyleSheet.create((theme) => ({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
     borderRadius: theme.radii.md,
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.sm,
@@ -108,7 +107,10 @@ const styles = StyleSheet.create((theme) => ({
         false: { minHeight: theme.sizes.button.regular },
       },
       disabled: { true: { opacity: 0.5 }, false: {} },
-      fullWidth: { true: { alignSelf: 'stretch' }, false: { alignSelf: 'flex-start' } },
+      fullWidth: {
+        true: { width: '100%', alignSelf: 'stretch' },
+        false: { width: 'auto' },
+      },
     },
   },
   pressed: { opacity: 0.85, transform: [{ scale: 0.985 }] },
