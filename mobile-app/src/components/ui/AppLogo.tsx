@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Image, type ImageStyle, type StyleProp } from 'react-native';
 
-const LOGO_SOURCE = require('../../../assets/icon/icon-big.png');
+const LOGO_SOURCE = require('../../assets/icon/icon-big.png');
 
 interface AppLogoProps {
   size?: number;

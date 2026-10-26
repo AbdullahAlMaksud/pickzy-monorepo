@@ -4,6 +4,7 @@ import { Image, Pressable, ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { ScreenContainer } from '@/components/layout/ScreenContainer';
+import { AppLogo } from '@/components/ui/AppLogo';
 import { AppText } from '@/components/ui/AppText';
 import { Avatar } from '@/components/ui/Avatar';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -18,7 +19,7 @@ import { ActionCard } from '../components/ActionCard';
 import { ProjectListItem } from '../components/ProjectListItem';
 import { StatCard } from '../components/StatCard';
 
-const NAV_BG = require('../../../../assets/images/nav-bg.png');
+const NAV_BG = require('../../../assets/images/Artboard-1 (1).png');
 
 const RECENT_LIMIT = 5;
 
@@ -44,19 +45,22 @@ export function HomeScreen() {
 
   return (
     <ScreenContainer edges={[]}>
+      <Image
+        source={NAV_BG}
+        style={styles.navBg}
+        resizeMode="cover"
+        pointerEvents="none"
+        accessible={false}
+      />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Image
-          source={NAV_BG}
-          style={styles.navBg}
-          resizeMode="cover"
-          pointerEvents="none"
-          accessible={false}
-        />
         <View style={styles.top}>
           <View style={styles.brand}>
-            <AppText variant="display" tone="primary" accessibilityRole="header">
-              {t('common:appName')}
-            </AppText>
+            <View style={styles.brandTitleRow}>
+              <AppLogo size={36} />
+              <AppText variant="display" tone="primary" accessibilityRole="header">
+                {t('common:appName')}
+              </AppText>
+            </View>
             <AppText variant="body" tone="secondary">
               {t('home:tagline')}
             </AppText>
@@ -127,9 +131,10 @@ const styles = StyleSheet.create((theme, rt) => ({
   navBg: {
     position: 'absolute',
     top: 0,
-    left: -theme.spacing.lg,
-    right: -theme.spacing.lg,
-    height: rt.insets.top + 175,
+    left: 0,
+    right: 0,
+    width: '100%',
+    height: rt.insets.top + 160,
     opacity: theme.isDark ? 0.35 : 0.95,
   },
   content: {
@@ -140,6 +145,7 @@ const styles = StyleSheet.create((theme, rt) => ({
   },
   top: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   brand: { gap: 2 },
+  brandTitleRow: { flexDirection: 'row', alignItems: 'center', gap: theme.spacing.sm },
   stats: { flexDirection: 'row', gap: theme.spacing.md },
   recent: { gap: theme.spacing.md },
 }));

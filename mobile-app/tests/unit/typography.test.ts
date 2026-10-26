@@ -32,7 +32,7 @@ describe('font resolution', () => {
     for (const prefix of prefixes) {
       for (const family of familyNamesFor(prefix)) {
         expect(FONT_FILES[prefix]).toHaveProperty(family);
-        expect(fs.existsSync(path.resolve(__dirname, '../../assets/fonts', `${family}.ttf`))).toBe(true);
+        expect(fs.existsSync(path.resolve(__dirname, '../../src/assets/fonts', `${family}.ttf`))).toBe(true);
       }
     }
   });

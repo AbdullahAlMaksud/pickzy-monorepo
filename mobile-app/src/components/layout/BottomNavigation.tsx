@@ -1,10 +1,12 @@
 import type { BottomTabBarProps } from 'expo-router/js-tabs';
-import { Pressable, View } from 'react-native';
+import { Image, Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { haptic } from '@/utils/haptics';
 import { AppText } from '../ui/AppText';
 import { Icon, type IconName } from '../ui/Icon';
+
+const NAV_BG = require('../../assets/images/Artboard-1 (1).png');
 
 const TAB_ICONS: Record<string, { icon: IconName; labelKey: string }> = {
   index: { icon: 'house', labelKey: 'tabs.home' },
@@ -16,6 +18,13 @@ export function BottomNavigation({ state, emitter, navigateToTab }: BottomTabBar
   const { t } = useTranslation('common');
   return (
     <View style={styles.bar} accessibilityRole="tablist">
+      <Image
+        source={NAV_BG}
+        style={styles.bgImage}
+        resizeMode="cover"
+        pointerEvents="none"
+        accessible={false}
+      />
       {state.routes.map((route, index) => {
         const meta = TAB_ICONS[route.name];
         if (!meta) return null;
@@ -52,6 +61,8 @@ export function BottomNavigation({ state, emitter, navigateToTab }: BottomTabBar
 
 const styles = StyleSheet.create((theme, rt) => ({
   bar: {
+    position: 'relative',
+    overflow: 'hidden',
     flexDirection: 'row',
     backgroundColor: theme.colors.surface,
     borderTopWidth: 1,
@@ -59,6 +70,16 @@ const styles = StyleSheet.create((theme, rt) => ({
     paddingTop: theme.spacing.sm,
     paddingBottom: Math.max(rt.insets.bottom, theme.spacing.sm),
     minHeight: theme.sizes.tabBar,
+  },
+  bgImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '100%',
+    opacity: theme.isDark ? 0.35 : 0.95,
   },
   item: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 2, minHeight: theme.sizes.touch },
   indicator: { width: 52, height: 30, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
