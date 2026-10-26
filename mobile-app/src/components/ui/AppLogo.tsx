@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import { Image, type ImageStyle, type StyleProp } from 'react-native';
-
-const LOGO_SOURCE = require('../../assets/icon/icon-big.png');
+import logoSource from '@/assets/icon/icon-big.png';
 
 interface AppLogoProps {
   size?: number;
@@ -12,7 +11,7 @@ interface AppLogoProps {
 function AppLogoBase({ size = 36, style, testID = 'app-logo' }: AppLogoProps) {
   return (
     <Image
-      source={LOGO_SOURCE}
+      source={logoSource}
       style={[{ width: size, height: size }, style]}
       resizeMode="contain"
       accessibilityRole="image"

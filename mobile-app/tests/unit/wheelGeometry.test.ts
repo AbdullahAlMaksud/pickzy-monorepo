@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import {
   computeLabelLayout,
   createSpinPlan,
@@ -114,8 +116,8 @@ describe('label layout', () => {
 
 describe('UI-thread safety', () => {
   it('keeps normalizeDegrees a worklet (it is called from SpinWheel\'s animated reaction)', () => {
-    const fs = require('fs') as typeof import('fs');
-    const source = fs.readFileSync(require.resolve('@/features/wheel/services/wheelGeometry'), 'utf8');
+    const filePath = path.resolve(__dirname, '../../src/features/wheel/services/wheelGeometry.ts');
+    const source = fs.readFileSync(filePath, 'utf8');
     expect(source).toMatch(/function normalizeDegrees\([^)]*\)[^{]*\{\s*'worklet';/);
   });
 });

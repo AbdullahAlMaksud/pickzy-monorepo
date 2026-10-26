@@ -15,11 +15,10 @@ import { useAsyncQuery } from '@/hooks/useAsyncQuery';
 import { useLocale } from '@/hooks/useLocale';
 import { useAppStore } from '@/store/appStore';
 import { dayPartOf } from '@/utils/format';
+import navBgImage from '@/assets/images/Artboard-1 (1).png';
 import { ActionCard } from '../components/ActionCard';
 import { ProjectListItem } from '../components/ProjectListItem';
 import { StatCard } from '../components/StatCard';
-
-const NAV_BG = require('../../../assets/images/Artboard-1 (1).png');
 
 const RECENT_LIMIT = 5;
 
@@ -46,7 +45,7 @@ export function HomeScreen() {
   return (
     <ScreenContainer edges={[]}>
       <Image
-        source={NAV_BG}
+        source={navBgImage}
         style={styles.navBg}
         resizeMode="cover"
         pointerEvents="none"
@@ -56,7 +55,7 @@ export function HomeScreen() {
         <View style={styles.top}>
           <View style={styles.brand}>
             <View style={styles.brandTitleRow}>
-              <AppLogo size={36} />
+              <AppLogo size={40} />
               <AppText variant="display" tone="primary" accessibilityRole="header">
                 {t('common:appName')}
               </AppText>
@@ -135,7 +134,7 @@ const styles = StyleSheet.create((theme, rt) => ({
     right: 0,
     width: '100%',
     height: rt.insets.top + 160,
-    opacity: theme.isDark ? 0.35 : 0.95,
+    opacity: theme.isDark ? 0.25 : 0.45,
   },
   content: {
     paddingTop: rt.insets.top + theme.spacing.lg,

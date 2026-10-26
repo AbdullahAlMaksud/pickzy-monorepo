@@ -2,11 +2,10 @@ import type { BottomTabBarProps } from 'expo-router/js-tabs';
 import { Image, Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
+import navBgImage from '@/assets/images/Artboard-1 (1).png';
 import { haptic } from '@/utils/haptics';
 import { AppText } from '../ui/AppText';
 import { Icon, type IconName } from '../ui/Icon';
-
-const NAV_BG = require('../../assets/images/Artboard-1 (1).png');
 
 const TAB_ICONS: Record<string, { icon: IconName; labelKey: string }> = {
   index: { icon: 'house', labelKey: 'tabs.home' },
@@ -19,7 +18,7 @@ export function BottomNavigation({ state, emitter, navigateToTab }: BottomTabBar
   return (
     <View style={styles.bar} accessibilityRole="tablist">
       <Image
-        source={NAV_BG}
+        source={navBgImage}
         style={styles.bgImage}
         resizeMode="cover"
         pointerEvents="none"
@@ -79,7 +78,7 @@ const styles = StyleSheet.create((theme, rt) => ({
     bottom: 0,
     width: '100%',
     height: '100%',
-    opacity: theme.isDark ? 0.35 : 0.95,
+    opacity: theme.isDark ? 0.05 : 0.15,
   },
   item: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 2, minHeight: theme.sizes.touch },
   indicator: { width: 52, height: 30, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },

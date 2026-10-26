@@ -1,4 +1,4 @@
-import { dayPartOf, formatDate, formatNumber, formatRelativeDateTime, formatTime, localizeDigits } from '@/utils/format';
+import { dayPartOf, formatDate, formatNumber, formatOrdinal, formatRelativeDateTime, formatTime, localizeDigits } from '@/utils/format';
 import { contrastRatio, readableTextColor } from '@/utils/color';
 import { wheelPalette } from '@/theme/tokens';
 
@@ -42,7 +42,6 @@ describe('wheel label contrast', () => {
 });
 
 describe('formatOrdinal', () => {
-  const { formatOrdinal } = require('@/utils/format') as typeof import('@/utils/format');
   it('formats English ordinals including 11th-13th', () => {
     expect([1, 2, 3, 4, 11, 12, 13, 21, 22, 101, 112].map((n) => formatOrdinal(n, 'en'))).toEqual([
       '1st', '2nd', '3rd', '4th', '11th', '12th', '13th', '21st', '22nd', '101st', '112th',

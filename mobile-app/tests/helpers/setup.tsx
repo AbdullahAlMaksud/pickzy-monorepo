@@ -1,9 +1,12 @@
 // Global Jest setup: Unistyles mock (no native runtime in Jest), Reanimated and native module mocks.
-/* eslint-disable @typescript-eslint/no-require-imports */
 import 'react-native-unistyles/mocks';
+import mockReact from 'react';
+import { Text as MockText } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { themes } from '@/theme/themes';
 import { breakpoints } from '@/theme/tokens';
+import { useToastStore } from '@/store/toastStore';
+import { reanimatedMock as mockReanimatedMock, workletsMock as mockWorkletsMock } from './reanimatedMock';
 
 StyleSheet.configure({
   themes,
@@ -11,8 +14,8 @@ StyleSheet.configure({
   settings: { initialTheme: 'light' },
 });
 
-jest.mock('react-native-reanimated', () => require('./reanimatedMock').reanimatedMock);
-jest.mock('react-native-worklets', () => require('./reanimatedMock').workletsMock);
+jest.mock('react-native-reanimated', () => mockReanimatedMock);
+jest.mock('react-native-worklets', () => mockWorkletsMock);
 jest.mock('expo-haptics', () => ({
   impactAsync: jest.fn(() => Promise.resolve()),
   selectionAsync: jest.fn(() => Promise.resolve()),
@@ -20,25 +23,21 @@ jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'light', Medium: 'medium', Heavy: 'heavy' },
   NotificationFeedbackType: { Success: 'success', Warning: 'warning', Error: 'error' },
 }));
-jest.mock('@react-native-vector-icons/lucide/static', () => {
-  const { Text } = require('react-native');
-  return { Lucide: ({ name }: { name: string }) => <Text>{`icon:${name}`}</Text> };
-});
+jest.mock('@react-native-vector-icons/lucide/static', () => ({
+  Lucide: ({ name }: { name: string }) => <MockText>{`icon:${name}`}</MockText>,
+}));
 
-jest.mock('expo-router', () => {
-  const React = require('react');
-  return {
-    router: {
-      push: jest.fn(),
-      replace: jest.fn(),
-      back: jest.fn(),
-      navigate: jest.fn(),
-      canGoBack: jest.fn(() => true),
-    },
-    useFocusEffect: (callback: () => void | (() => void)) => React.useEffect(callback, [callback]),
-    useLocalSearchParams: jest.fn(() => ({})),
-  };
-});
+jest.mock('expo-router', () => ({
+  router: {
+    push: jest.fn(),
+    replace: jest.fn(),
+    back: jest.fn(),
+    navigate: jest.fn(),
+    canGoBack: jest.fn(() => true),
+  },
+  useFocusEffect: (callback: () => void | (() => void)) => mockReact.useEffect(callback, [callback]),
+  useLocalSearchParams: jest.fn(() => ({})),
+}));
 jest.mock('expo-sqlite', () => ({}));
 jest.mock('expo-document-picker', () => ({ getDocumentAsync: jest.fn() }));
 jest.mock('expo-image-picker', () => ({ launchImageLibraryAsync: jest.fn() }));
@@ -63,7 +62,5 @@ jest.mock('expo-file-system', () => {
 });
 
 beforeEach(() => {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { useToastStore } = require('@/store/toastStore');
   useToastStore.setState({ current: null });
 });
