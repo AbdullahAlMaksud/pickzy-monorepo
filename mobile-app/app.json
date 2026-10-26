@@ -12,7 +12,11 @@
       "supportsTablet": false,
       "bundleIdentifier": "app.pickzy.mobile",
       "infoPlist": {
-        "CFBundleAllowMixedLocalizations": true
+        "CFBundleAllowMixedLocalizations": true,
+        "CFBundleLocalizations": [
+          "en",
+          "bn"
+        ]
       }
     },
     "android": {
@@ -46,8 +50,14 @@
         "expo-localization",
         {
           "supportedLocales": {
-            "ios": ["en", "bn"],
-            "android": ["en", "bn"]
+            "ios": [
+              "en",
+              "bn"
+            ],
+            "android": [
+              "en",
+              "bn"
+            ]
           }
         }
       ],
@@ -60,6 +70,17 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "dcc0d5d0-3d26-4492-a4bc-25e50a747e33"
+      }
+    },
+    "owner": "abdullahalmaksud"
   }
 }
