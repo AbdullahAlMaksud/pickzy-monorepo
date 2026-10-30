@@ -1,0 +1,38 @@
+{
+  "tagline": "Make decisions fun",
+  "greeting": {
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening",
+    "withName": "{{greeting}}, {{name}}",
+    "withoutName": "{{greeting}}"
+  },
+  "openProfile": "Open profile",
+  "create": {
+    "title": "Create New Project",
+    "subtitle": "Add participants and start spinning"
+  },
+  "myProjects": {
+    "title": "My Projects",
+    "subtitle": "View and manage your projects"
+  },
+  "stats": {
+    "projects": "Projects",
+    "participants": "Participants",
+    "winners": "Winners"
+  },
+  "recent": {
+    "title": "Recent Projects",
+    "seeAll": "See All"
+  },
+  "project": {
+    "updated": "Updated {{date}}",
+    "lastWinner": "Last winner: {{name}}",
+    "open": "Open project {{name}}"
+  },
+  "empty": {
+    "title": "No projects yet",
+    "message": "Create your first project, add some names and spin the wheel to pick a winner.",
+    "action": "Create your first project"
+  }
+}

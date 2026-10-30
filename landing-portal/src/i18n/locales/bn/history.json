@@ -1,0 +1,50 @@
+{
+  "title": "ইতিহাস",
+  "search": "ড্র বা বিজয়ী খুঁজুন",
+  "sort": {
+    "label": "সাজান",
+    "newest": "নতুন আগে",
+    "oldest": "পুরনো আগে"
+  },
+  "empty": {
+    "title": "এখনো কোনো ড্র নেই",
+    "message": "সমাপ্ত ড্রগুলো বিজয়ী ও অংশগ্রহণকারীসহ এখানে দেখা যাবে।",
+    "action": "প্রজেক্ট তৈরি করুন"
+  },
+  "noResults": "আপনার অনুসন্ধানের সঙ্গে কোনো ড্র মেলেনি।",
+  "item": {
+    "winner": "বিজয়ী: {{names}}",
+    "winners": "বিজয়ী: {{names}}",
+    "more": "+ আরও {{count, localeNumber}} জন",
+    "open": "{{name}} ড্র খুলুন"
+  },
+  "detail": {
+    "title": "ড্রের বিবরণ",
+    "winner": "বিজয়ী",
+    "winnersHeading": "বিজয়ী",
+    "participantsHeading": "অংশগ্রহণকারী ({{count, localeNumber}})",
+    "order": "#{{order, localeNumber}}",
+    "winnerBadge": "বিজয়ী",
+    "rulesHeading": "ব্যবহৃত নিয়ম",
+    "winnerCount": "চাওয়া বিজয়ীর সংখ্যা",
+    "repeat": "একই বিজয়ীর পুনরায় জেতা",
+    "repeatOn": "অনুমোদিত",
+    "repeatOff": "অনুমোদিত নয়",
+    "removed": "বিজয়ীকে তালিকা থেকে সরানো",
+    "removedOn": "হ্যাঁ",
+    "removedOff": "না",
+    "completedAt": "সম্পন্ন হয়েছে",
+    "startedAt": "শুরু হয়েছে",
+    "originalCount": "ড্রের সময়ে অংশগ্রহণকারী",
+    "projectDeleted": "মূল প্রজেক্টটি মুছে ফেলা হয়েছে।",
+    "notFound": "এই ড্রটি পাওয়া যায়নি।",
+    "share": "ফলাফল শেয়ার করুন",
+    "shareMessage": "{{project}} — {{date}}\n{{winners}}\n\nPickzy দিয়ে বাছাই করা",
+    "shareWinnersLine": "{{place}} স্থান: {{name}}",
+    "snapshotNote": "এটি ড্রের সময়ের একটি কপি। প্রজেক্টে পরে করা পরিবর্তন এতে প্রভাব ফেলে না।",
+    "participantsEmpty": "এই ড্রের জন্য কোনো অংশগ্রহণকারী সংরক্ষিত নেই।",
+    "copied": "ফলাফল ক্লিপবোর্ডে কপি হয়েছে",
+    "shareFailed": "এই ব্রাউজারে শেয়ার করা যাচ্ছে না।"
+  },
+  "loadMore": "আরও দেখান"
+}

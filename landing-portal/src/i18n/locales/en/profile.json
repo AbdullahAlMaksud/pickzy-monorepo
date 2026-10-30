@@ -1,0 +1,46 @@
+{
+  "title": "Profile",
+  "defaultName": "Your name",
+  "name": "Display name",
+  "namePlaceholder": "How should we greet you?",
+  "save": "Save profile",
+  "saved": "Profile saved",
+  "changePhoto": "Change photo",
+  "removePhoto": "Remove photo",
+  "photoUpdated": "Photo updated",
+  "photoRemoved": "Photo removed",
+  "photoError": "The photo couldn't be saved. Please try another image.",
+  "sectionAppearance": "Appearance",
+  "sectionPreferences": "Preferences",
+  "sectionAbout": "About",
+  "theme": "Theme",
+  "language": "Language",
+  "themes": {
+    "system": {
+      "name": "System",
+      "hint": "Use device theme"
+    },
+    "light": {
+      "name": "Light",
+      "hint": "Clean and minimal"
+    },
+    "dark": {
+      "name": "Dark",
+      "hint": "Easy on the eyes"
+    },
+    "colorful": {
+      "name": "Colorful",
+      "hint": "Vibrant and playful"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "bn": "বাংলা"
+  },
+  "confetti": "Celebration confetti",
+  "confettiHint": "Show confetti when a winner is revealed",
+  "offline": {
+    "title": "Works offline",
+    "message": "Your projects, participants and results are stored only in this browser. Pickzy needs no account, and it keeps working without an internet connection."
+  }
+}

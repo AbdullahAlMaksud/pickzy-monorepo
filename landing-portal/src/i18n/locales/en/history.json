@@ -1,0 +1,50 @@
+{
+  "title": "History",
+  "search": "Search draws or winners",
+  "sort": {
+    "label": "Sort",
+    "newest": "Newest",
+    "oldest": "Oldest"
+  },
+  "empty": {
+    "title": "No draws yet",
+    "message": "Finished draws will appear here with their winners and participants.",
+    "action": "Create a project"
+  },
+  "noResults": "No draws match your search.",
+  "item": {
+    "winner": "Winner: {{names}}",
+    "winners": "Winners: {{names}}",
+    "more": "+{{count, localeNumber}} more",
+    "open": "Open draw {{name}}"
+  },
+  "detail": {
+    "title": "Draw Details",
+    "winner": "Winner",
+    "winnersHeading": "Winners",
+    "participantsHeading": "Participants ({{count, localeNumber}})",
+    "order": "#{{order, localeNumber}}",
+    "winnerBadge": "Winner",
+    "rulesHeading": "Rules used",
+    "winnerCount": "Winners requested",
+    "repeat": "Repeat winners",
+    "repeatOn": "Allowed",
+    "repeatOff": "Not allowed",
+    "removed": "Winners removed from list",
+    "removedOn": "Yes",
+    "removedOff": "No",
+    "completedAt": "Completed",
+    "startedAt": "Started",
+    "originalCount": "Participants at the time of the draw",
+    "projectDeleted": "The original project has been deleted.",
+    "notFound": "This draw couldn't be found.",
+    "share": "Share result",
+    "shareMessage": "{{project}} — {{date}}\n{{winners}}\n\nPicked with Pickzy",
+    "shareWinnersLine": "{{place}} place: {{name}}",
+    "snapshotNote": "This is a snapshot. Later changes to the project don't affect it.",
+    "participantsEmpty": "No participants were saved for this draw.",
+    "copied": "Result copied to clipboard",
+    "shareFailed": "Sharing isn't available in this browser."
+  },
+  "loadMore": "Show more"
+}
