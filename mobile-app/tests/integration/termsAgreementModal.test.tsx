@@ -73,3 +73,4 @@ describe('TermsAgreementModal', () => {
     expect(screen.queryByTestId('terms-agreement-modal')).toBeNull();
   });
 });
+
