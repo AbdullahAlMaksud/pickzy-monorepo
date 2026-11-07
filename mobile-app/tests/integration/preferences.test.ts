@@ -18,10 +18,12 @@ describe('preferences', () => {
       displayName: '  আব্দুল্লাহ   ভাই ',
       photoUri: 'file:///data/profile/avatar-1.jpg',
       theme: 'dark',
-      font: 'poppins',
+      font: 'playfair',
+      fontSize: 'large',
       locale: 'bn',
       haptics: false,
       confetti: false,
+      termsAccepted: true,
     });
 
     const reopened = await reopenTestDatabase(first.export());
@@ -30,10 +32,12 @@ describe('preferences', () => {
       displayName: 'আব্দুল্লাহ ভাই',
       photoUri: 'file:///data/profile/avatar-1.jpg',
       theme: 'dark',
-      font: 'poppins',
+      font: 'playfair',
+      fontSize: 'large',
       locale: 'bn',
       haptics: false,
       confetti: false,
+      termsAccepted: true,
     });
     expect(await createPreferencesService(reopened.db).hasStoredLocale()).toBe(true);
   });
@@ -54,6 +58,8 @@ describe('preferences', () => {
     const loaded = parsePreferences({ 'ui.theme': 'neon', 'ui.font': 'comic', 'ui.locale': 'fr', 'ui.haptics': 'maybe', 'profile.displayName': 'x'.repeat(200) });
     expect(loaded.theme).toBe(DEFAULT_PREFERENCES.theme);
     expect(loaded.font).toBe(DEFAULT_PREFERENCES.font);
+    expect(loaded.fontSize).toBe(DEFAULT_PREFERENCES.fontSize);
+    expect(loaded.termsAccepted).toBe(false);
     expect(loaded.locale).toBe(DEFAULT_PREFERENCES.locale);
     expect(loaded.haptics).toBe(true);
     expect(Array.from(loaded.displayName)).toHaveLength(MAX_DISPLAY_NAME);

@@ -1,28 +1,27 @@
 import type { FontWeightName } from './tokens';
 
 export type FontKey =
-  | 'inter'
-  | 'poppins'
-  | 'roboto'
-  | 'nunito'
+  | 'playfair'
   | 'opensans'
   | 'anekbangla'
-  | 'notosansbengali';
+  | 'purno';
 
 export interface FontOption {
   key: FontKey;
   /** Display name (proper nouns are not translated). */
   label: string;
-  /** Prefix of the bundled TTF family names, e.g. `Inter` -> `Inter_400Regular`. */
+  /** Prefix of the bundled TTF family names, e.g. `OpenSans` -> `OpenSans_400Regular`. */
   prefix: string;
   descriptionKey: string;
 }
 
 export const FONT_OPTIONS: readonly FontOption[] = [
-  { key: 'inter', label: 'Inter', prefix: 'Inter', descriptionKey: 'profile:fonts.inter' },
-  { key: 'poppins', label: 'Poppins', prefix: 'Poppins', descriptionKey: 'profile:fonts.poppins' },
-  { key: 'roboto', label: 'Roboto', prefix: 'Roboto', descriptionKey: 'profile:fonts.roboto' },
-  { key: 'nunito', label: 'Nunito', prefix: 'Nunito', descriptionKey: 'profile:fonts.nunito' },
+  {
+    key: 'playfair',
+    label: 'Playfair Display',
+    prefix: 'PlayfairDisplay',
+    descriptionKey: 'profile:fonts.playfair',
+  },
   {
     key: 'opensans',
     label: 'Open Sans',
@@ -36,14 +35,14 @@ export const FONT_OPTIONS: readonly FontOption[] = [
     descriptionKey: 'profile:fonts.anekbangla',
   },
   {
-    key: 'notosansbengali',
-    label: 'Noto Sans Bengali',
-    prefix: 'NotoSansBengali',
-    descriptionKey: 'profile:fonts.notosansbengali',
+    key: 'purno',
+    label: 'Purno',
+    prefix: 'Purno',
+    descriptionKey: 'profile:fonts.purno',
   },
 ] as const;
 
-export const DEFAULT_FONT_KEY: FontKey = 'inter';
+export const DEFAULT_FONT_KEY: FontKey = 'opensans';
 
 export const FONT_KEYS: readonly FontKey[] = FONT_OPTIONS.map((f) => f.key);
 
@@ -65,7 +64,7 @@ export function containsBengali(text: string | undefined | null): boolean {
   return !!text && BENGALI_RE.test(text);
 }
 
-export const BENGALI_FONT_PREFIX = 'NotoSansBengali';
+export const BENGALI_FONT_PREFIX = 'AnekBangla';
 export const BENGALI_DISPLAY_FONT_PREFIX = 'AnekBangla';
 
 export type TextVariantRole = 'display' | 'title' | 'heading' | 'body' | 'label' | 'caption' | 'micro';
@@ -76,16 +75,15 @@ export interface ResolveFontInput {
   weight: FontWeightName;
   /** When the text itself contains Bengali characters the Bengali family is always used. */
   text?: string | null;
-  /** Variant role: display/title/heading use Anek Bangla; body/caption/label use Noto Sans Bengali. */
+  /** Variant role: display/title/heading use Anek Bangla; body/caption/label use Anek Bangla/Purno. */
   variant?: TextVariantRole;
 }
 
 /**
  * Picks the bundled font family for a piece of text.
  *
- * For Bengali text (or Bengali UI), Anek Bangla is paired for headings/display titles,
- * and Noto Sans Bengali is paired for body text and micro/captions.
- * When the user selects a specific font key (like 'anekbangla' or 'notosansbengali'),
+ * For Bengali text (or Bengali UI), Anek Bangla or Purno is used.
+ * When the user selects a specific font key (like 'anekbangla' or 'purno'),
  * that choice is honored.
  */
 export function resolveFontFamily({ fontKey, locale, weight, text, variant }: ResolveFontInput): string {
@@ -93,17 +91,17 @@ export function resolveFontFamily({ fontKey, locale, weight, text, variant }: Re
   let prefix: string;
 
   if (useBengali) {
-    if (fontKey === 'anekbangla') {
+    if (fontKey === 'purno') {
+      prefix = 'Purno';
+    } else if (fontKey === 'anekbangla') {
       prefix = 'AnekBangla';
-    } else if (fontKey === 'notosansbengali') {
-      prefix = 'NotoSansBengali';
     } else if (variant === 'display' || variant === 'title' || variant === 'heading') {
       prefix = BENGALI_DISPLAY_FONT_PREFIX;
     } else {
       prefix = BENGALI_FONT_PREFIX;
     }
   } else {
-    prefix = FONT_OPTIONS.find((f) => f.key === fontKey)?.prefix ?? 'Inter';
+    prefix = FONT_OPTIONS.find((f) => f.key === fontKey)?.prefix ?? 'OpenSans';
   }
 
   return `${prefix}_${WEIGHT_SUFFIX[weight]}`;

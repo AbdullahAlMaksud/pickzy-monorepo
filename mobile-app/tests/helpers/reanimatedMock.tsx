@@ -39,6 +39,7 @@ export const reanimatedMock = {
   FadeIn: makeLayout(),
   FadeOut: makeLayout(),
   ZoomIn: makeLayout(),
+  ZoomOut: makeLayout(),
 };
 
 export const workletsMock = {

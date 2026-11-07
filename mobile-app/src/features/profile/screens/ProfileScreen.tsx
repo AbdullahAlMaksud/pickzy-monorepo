@@ -1,14 +1,14 @@
 import Constants from 'expo-constants';
-import { useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { StyleSheet } from 'react-native-unistyles';
+import { useFocusEffect } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Pressable, View } from 'react-native';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { SafeScreen, ScreenHeader } from '@/components/layout';
 import {
   AppButton,
   AppCard,
-  AppInput,
-  AppLogo,
   AppSwitch,
   AppText,
   Avatar,
@@ -18,23 +18,33 @@ import { showToast } from '@/store/toastStore';
 import { SettingRow } from '@/features/wheel/components/SettingRow';
 import { SettingsGroup } from '@/features/wheel/components/SettingsGroup';
 import { FONT_OPTIONS } from '@/theme/typography';
+import { AppInfoSection } from '../components/AppInfoSection';
+import { EditProfileNameModal } from '../components/EditProfileNameModal';
 import { FontSelector } from '../components/FontSelector';
-import { LanguageSelector } from '../components/LanguageSelector';
+import { FontSizeSelector } from '../components/FontSizeSelector';
+import { LanguageSection } from '../components/LanguageSection';
 import { ThemeSelector } from '../components/ThemeSelector';
 import { usePreferences } from '../hooks/usePreferences';
 import { deleteStoredPhoto, photoExists, pickAndStoreProfilePhoto } from '../services/photoService';
-import { MAX_DISPLAY_NAME, normalizeDisplayName } from '../services/preferencesService';
+import { normalizeDisplayName } from '../services/preferencesService';
 
-type Picker = null | 'theme' | 'font' | 'language';
+type Picker = null | 'theme' | 'font' | 'fontSize';
 
 export function ProfileScreen() {
   const { t } = useTranslation(['profile', 'common']);
-  const { preferences, setTheme, setFont, setLocale, setFlag, saveMany } = usePreferences();
-  const [name, setName] = useState(preferences.displayName);
+  const { theme } = useUnistyles();
+  const { preferences, setTheme, setFont, setFontSize, setLocale, setFlag, saveMany } = usePreferences();
   const [picker, setPicker] = useState<Picker>(null);
+  const [isEditingName, setIsEditingName] = useState(false);
   const [savingName, setSavingName] = useState(false);
   const [busyPhoto, setBusyPhoto] = useState(false);
   const missingNotified = useRef(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setStyle(theme.isDark ? 'light' : 'dark');
+    }, [theme.isDark])
+  );
 
   // A stored photo can disappear (cleared storage, restored backup): fall back to the default avatar.
   const photoOk = photoExists(preferences.photoUri);
@@ -46,14 +56,12 @@ export function ProfileScreen() {
     }
   }, [preferences.photoUri, photoOk, t]);
 
-  const dirty = normalizeDisplayName(name) !== preferences.displayName;
-
-  const saveProfile = async () => {
+  const saveName = async (newName: string) => {
     setSavingName(true);
     try {
-      const clean = normalizeDisplayName(name);
+      const clean = normalizeDisplayName(newName);
       await saveMany({ displayName: clean });
-      setName(clean);
+      setIsEditingName(false);
       showToast(t('profile:saved'), 'success');
     } catch {
       showToast(t('common:errors.saveFailed'), 'error');
@@ -92,30 +100,67 @@ export function ProfileScreen() {
   const version = Constants.expoConfig?.version ?? '1.0.0';
 
   return (
-    <SafeScreen edges={['top']} header={<ScreenHeader title={t('profile:title')} hideBack />} testID="profile-screen">
-      <View style={styles.hero}>
-        <Avatar name={preferences.displayName} photoUri={photoUri} size={104} testID="profile-avatar" />
-        <View style={styles.photoActions}>
-          <AppButton label={t('profile:changePhoto')} variant="secondary" compact fullWidth={false} icon="camera" loading={busyPhoto} onPress={changePhoto} testID="change-photo" />
-          {photoUri ? <AppButton label={t('profile:removePhoto')} variant="ghost" compact fullWidth={false} onPress={removePhoto} testID="remove-photo" /> : null}
-        </View>
-      </View>
+    <SafeScreen
+      edges={['top']}
+      header={<ScreenHeader title={t('profile:title')} hideBack />}
+      testID="profile-screen"
+    >
+      <StatusBar style={theme.isDark ? 'light' : 'dark'} />
+      <View style={styles.heroCard}>
+        <Pressable
+          onPress={() => setIsEditingName(true)}
+          accessibilityRole="button"
+          accessibilityLabel={t('profile:editName')}
+          style={styles.editButton}
+          testID="edit-name-button"
+        >
+          <Icon name="pencil" size="sm" color="primary" />
+        </Pressable>
 
-      <AppCard>
-        <AppInput
-          label={t('profile:name')}
-          value={name}
-          onChangeText={setName}
-          placeholder={t('profile:namePlaceholder')}
-          maxLength={MAX_DISPLAY_NAME}
-          returnKeyType="done"
-          onSubmitEditing={dirty ? saveProfile : undefined}
-          testID="profile-name-input"
-        />
-        <View style={styles.saveRow}>
-          <AppButton label={t('profile:save')} disabled={!dirty} loading={savingName} onPress={saveProfile} testID="save-profile" />
+        <View style={styles.avatarWrapper}>
+          <View style={styles.avatarRing}>
+            <Avatar
+              name={preferences.displayName}
+              photoUri={photoUri}
+              size={98}
+              testID="profile-avatar"
+            />
+          </View>
+
+          <Pressable
+            onPress={changePhoto}
+            disabled={busyPhoto}
+            accessibilityRole="button"
+            accessibilityLabel={t('profile:changePhoto')}
+            style={styles.cameraBadge}
+            testID="change-photo"
+          >
+            <Icon name="camera" size="xs" color="onPrimary" />
+          </Pressable>
         </View>
-      </AppCard>
+
+        <View style={styles.nameBlock}>
+          <Pressable onPress={() => setIsEditingName(true)} hitSlop={6}>
+            <AppText variant="title" weight="bold" align="center" style={styles.displayName}>
+              {preferences.displayName || t('profile:defaultName')}
+            </AppText>
+          </Pressable>
+          <AppText variant="caption" tone="secondary" align="center">
+            {t('profile:subtitle')}
+          </AppText>
+        </View>
+
+        {photoUri ? (
+          <AppButton
+            label={t('profile:removePhoto')}
+            variant="ghost"
+            compact
+            fullWidth={false}
+            onPress={removePhoto}
+            testID="remove-photo"
+          />
+        ) : null}
+      </View>
 
       <SettingsGroup title={t('profile:sectionAppearance')}>
         <SettingRow
@@ -135,14 +180,19 @@ export function ProfileScreen() {
           testID="row-font"
         />
         <SettingRow
-          icon="languages"
-          title={t('profile:language')}
-          right={<AppText variant="caption" tone="muted">{t(`profile:languages.${preferences.locale}`)}</AppText>}
+          icon="a-large-small"
+          title={t('profile:fontSize')}
+          right={<AppText variant="caption" tone="muted">{t(`profile:fontSizes.${preferences.fontSize}.name`)}</AppText>}
           showChevron
-          onPress={() => setPicker('language')}
-          testID="row-language"
+          onPress={() => setPicker('fontSize')}
+          testID="row-fontSize"
         />
       </SettingsGroup>
+
+      <LanguageSection
+        currentLocale={preferences.locale}
+        onSelectLocale={setLocale}
+      />
 
       <SettingsGroup title={t('profile:sectionPreferences')}>
         <SettingRow
@@ -173,12 +223,7 @@ export function ProfileScreen() {
         </View>
       </AppCard>
 
-      <View style={styles.aboutRow}>
-        <AppLogo size={20} />
-        <AppText variant="caption" tone="muted" align="center">
-          {t('common:appName')} · {t('profile:about.version', { version })}
-        </AppText>
-      </View>
+      <AppInfoSection version={version} />
 
       <ThemeSelector
         visible={picker === 'theme'}
@@ -198,30 +243,84 @@ export function ProfileScreen() {
           setPicker(null);
         }}
       />
-      <LanguageSelector
-        visible={picker === 'language'}
-        value={preferences.locale}
+      <FontSizeSelector
+        visible={picker === 'fontSize'}
+        value={preferences.fontSize}
         onClose={() => setPicker(null)}
         onApply={async (v) => {
-          await setLocale(v).catch(() => showToast(t('common:errors.saveFailed'), 'error'));
+          await setFontSize(v).catch(() => showToast(t('common:errors.saveFailed'), 'error'));
           setPicker(null);
         }}
+      />
+      <EditProfileNameModal
+        visible={isEditingName}
+        currentName={preferences.displayName}
+        onClose={() => setIsEditingName(false)}
+        onSave={saveName}
+        saving={savingName}
       />
     </SafeScreen>
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
-  hero: { alignItems: 'center', gap: theme.spacing.md },
-  photoActions: {
-    flexDirection: 'row',
+  heroCard: {
+    alignItems: 'center',
+    gap: theme.spacing.md,
+    position: 'relative',
+    paddingVertical: theme.spacing.md,
+  },
+  editButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: theme.colors.surface,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
     alignItems: 'center',
     justifyContent: 'center',
-    flexWrap: 'wrap',
-    gap: theme.spacing.sm,
+    ...theme.shadows.sm,
+    zIndex: 1,
   },
-  saveRow: { marginTop: theme.spacing.md },
+  avatarWrapper: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarRing: {
+    width: 108,
+    height: 108,
+    borderRadius: 54,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  cameraBadge: {
+    position: 'absolute',
+    bottom: -2,
+    right: -2,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: theme.colors.primary,
+    borderWidth: 2.5,
+    borderColor: theme.colors.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...theme.shadows.sm,
+  },
+  nameBlock: {
+    alignItems: 'center',
+    gap: 4,
+  },
+  displayName: {
+    color: theme.colors.text,
+  },
   offline: { flexDirection: 'row', gap: theme.spacing.md, alignItems: 'flex-start' },
   offlineText: { flex: 1, gap: 2 },
-  aboutRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: theme.spacing.xs },
 }));

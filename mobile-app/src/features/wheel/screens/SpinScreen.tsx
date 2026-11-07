@@ -1,8 +1,8 @@
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { FlatList, View, useWindowDimensions } from 'react-native';
-import { StyleSheet } from 'react-native-unistyles';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { AppButton } from '@/components/ui/AppButton';
 import { AppText } from '@/components/ui/AppText';
@@ -25,13 +25,17 @@ import { useDrawErrorMessage } from '../hooks/useDrawErrors';
 import { useDrawSession } from '../hooks/useDrawSession';
 import { useSpinController } from '../hooks/useSpinController';
 import { computeLabelLayout } from '../services/wheelGeometry';
-import { winnersAreExcluded } from '../services/winnerSelection';
-import { getDrawProgress, normalizeRules } from '../services/winnerSelection';
+import {
+  getDrawProgress,
+  normalizeRules,
+  winnersAreExcluded,
+} from '../services/winnerSelection';
 import type { DrawParticipant } from '../types';
 
 const ROW_HEIGHT = 52;
 
 export function SpinScreen({ drawId }: { drawId: number }) {
+  const { theme } = useUnistyles();
   const { t } = useTranslation(['wheel', 'common']);
   const { number, ordinal } = useLocale();
   const { draws } = useServices();
@@ -39,6 +43,12 @@ export function SpinScreen({ drawId }: { drawId: number }) {
   const wheelRef = useRef<SpinWheelHandle>(null);
   const errorMessage = useDrawErrorMessage();
   const [finishing, setFinishing] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setStyle(theme.isDark ? 'light' : 'dark');
+    }, [theme.isDark]),
+  );
 
   const { snapshot, loading, error, reload } = useDrawSession(drawId);
 
@@ -123,7 +133,7 @@ export function SpinScreen({ drawId }: { drawId: number }) {
     ({ item, index }: { item: DrawParticipant; index: number }) => (
       <View style={styles.row} accessible accessibilityLabel={item.displayName}>
         <Avatar name={item.displayName} size={32} colorIndex={index} />
-        <AppText variant="label" tone="stage" numberOfLines={1} style={styles.rowName}>
+        <AppText variant="label" numberOfLines={1} style={styles.rowName}>
           {item.displayName}
         </AppText>
       </View>
@@ -133,17 +143,17 @@ export function SpinScreen({ drawId }: { drawId: number }) {
 
   if (loading && !snapshot) {
     return (
-      <ScreenContainer tone="stage">
-        <StatusBar style="light" />
+      <ScreenContainer tone="background">
+        <StatusBar style={theme.isDark ? 'light' : 'dark'} />
         <LoadingView />
       </ScreenContainer>
     );
   }
   if (error || !snapshot || !rules) {
     return (
-      <ScreenContainer tone="stage">
-        <StatusBar style="light" />
-        <ScreenHeader title={t('common:appName')} tone="stage" />
+      <ScreenContainer tone="background">
+        <StatusBar style={theme.isDark ? 'light' : 'dark'} />
+        <ScreenHeader title={t('common:appName')} />
         <ErrorView title={t('common:errors.loadFailed')} onRetry={() => void reload()} />
       </ScreenContainer>
     );
@@ -165,10 +175,10 @@ export function SpinScreen({ drawId }: { drawId: number }) {
         />
       ) : progress?.kind === 'exhausted' && wheelItems.length === 0 ? (
         <View style={styles.notice}>
-          <AppText variant="heading" tone="stage" align="center">
+          <AppText variant="heading" align="center">
             {t('noEligible.title')}
           </AppText>
-          <AppText tone="stageMuted" align="center">
+          <AppText tone="secondary" align="center">
             {t('noEligible.message')}
           </AppText>
         </View>
@@ -188,12 +198,12 @@ export function SpinScreen({ drawId }: { drawId: number }) {
 
       <View style={styles.chips}>
         <View style={styles.chip}>
-          <AppText variant="caption" tone="stage" weight="semibold">
+          <AppText variant="caption" weight="semibold">
             {t('progress', { done, total })}
           </AppText>
         </View>
         <View style={styles.chip}>
-          <AppText variant="caption" tone="stageMuted">
+          <AppText variant="caption" tone="secondary">
             {t('eligible', { count: wheelItems.length })}
           </AppText>
         </View>
@@ -201,10 +211,10 @@ export function SpinScreen({ drawId }: { drawId: number }) {
 
       {progress?.kind === 'complete' ? (
         <View style={styles.notice} accessibilityRole="alert">
-          <AppText variant="label" tone="stage" weight="semibold" align="center">
+          <AppText variant="label" weight="semibold" align="center">
             {t('complete.title')}
           </AppText>
-          <AppText variant="caption" tone="stageMuted" align="center">
+          <AppText variant="caption" tone="secondary" align="center">
             {t('complete.message')}
           </AppText>
         </View>
@@ -240,11 +250,11 @@ export function SpinScreen({ drawId }: { drawId: number }) {
       )}
 
       <View style={styles.section}>
-        <AppText variant="heading" tone="stage" accessibilityRole="header">
+        <AppText variant="heading" accessibilityRole="header">
           {t('winnersTitle')}
         </AppText>
         {snapshot.winners.length === 0 ? (
-          <AppText variant="caption" tone="stageMuted">
+          <AppText variant="caption" tone="secondary">
             {t('noWinnersYet')}
           </AppText>
         ) : (
@@ -261,11 +271,11 @@ export function SpinScreen({ drawId }: { drawId: number }) {
       </View>
 
       <View style={styles.section}>
-        <AppText variant="heading" tone="stage" accessibilityRole="header">
+        <AppText variant="heading" accessibilityRole="header">
           {t('participantsList')} ({number(wheelItems.length)})
         </AppText>
         {labelsHidden ? (
-          <AppText variant="caption" tone="stageMuted">
+          <AppText variant="caption" tone="secondary">
             {t('tooManyLabels')}
           </AppText>
         ) : null}
@@ -274,13 +284,12 @@ export function SpinScreen({ drawId }: { drawId: number }) {
   );
 
   return (
-    <ScreenContainer tone="stage">
-      <StatusBar style="light" />
+    <ScreenContainer tone="background">
+      <StatusBar style={theme.isDark ? 'light' : 'dark'} />
       <ScreenHeader
         title={snapshot.session.projectName}
         subtitle={t('common:participants', { count: snapshot.participants.length })}
-        tone="stage"
-        right={<IconButton icon="settings" label={t('settings')} variant="stage" color="stageText" disabled={busy} onPress={openSettings} testID="open-draw-settings" />}
+        right={<IconButton icon="settings" label={t('settings')} disabled={busy} onPress={openSettings} testID="open-draw-settings" />}
       />
       <FlatList
         data={wheelItems}
@@ -321,9 +330,18 @@ const styles = StyleSheet.create((theme) => ({
     paddingHorizontal: theme.spacing.md,
     paddingVertical: theme.spacing.xs + 2,
     borderRadius: theme.radii.pill,
-    backgroundColor: theme.colors.stageSurface,
+    backgroundColor: theme.colors.surface,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
   },
-  notice: { gap: theme.spacing.xs, padding: theme.spacing.lg, borderRadius: theme.radii.md, backgroundColor: theme.colors.stageSurface },
+  notice: {
+    gap: theme.spacing.xs,
+    padding: theme.spacing.lg,
+    borderRadius: theme.radii.md,
+    backgroundColor: theme.colors.surface,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+  },
   section: { gap: theme.spacing.sm },
   listContent: { paddingBottom: theme.spacing.xxxl },
   row: {
@@ -334,7 +352,7 @@ const styles = StyleSheet.create((theme) => ({
     marginHorizontal: theme.spacing.lg,
     paddingHorizontal: theme.spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.stageRing,
+    borderBottomColor: theme.colors.divider,
   },
   rowName: { flex: 1 },
 }));

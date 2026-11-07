@@ -19,10 +19,10 @@ function WinnerCardBase({ name, positionLabel, colorIndex, testID }: WinnerCardP
     <View style={styles.card} testID={testID} accessible accessibilityLabel={`${positionLabel}: ${name}`}>
       <Avatar name={name} size={40} colorIndex={colorIndex} />
       <View style={styles.text}>
-        <AppText variant="caption" tone="stageMuted">
+        <AppText variant="caption" tone="secondary">
           {positionLabel}
         </AppText>
-        <AppText variant="label" weight="semibold" tone="stage" numberOfLines={1}>
+        <AppText variant="label" weight="semibold" tone="text" numberOfLines={1}>
           {name}
         </AppText>
       </View>
@@ -40,7 +40,9 @@ const styles = StyleSheet.create((theme) => ({
     gap: theme.spacing.md,
     padding: theme.spacing.md,
     borderRadius: theme.radii.md,
-    backgroundColor: theme.colors.stageSurface,
+    backgroundColor: theme.colors.surface,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
   },
   text: { flex: 1 },
 }));

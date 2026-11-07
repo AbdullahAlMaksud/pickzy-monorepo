@@ -5,7 +5,7 @@ import { useAppStore } from '@/store/appStore';
 import { applyThemePreference } from '@/theme/applyTheme';
 import { loadFontsForKey } from '@/theme/fonts';
 import type { FontKey } from '@/theme/typography';
-import type { AppPreferences, LocaleCode, ThemePreference } from '../types';
+import type { AppPreferences, FontSizePreference, LocaleCode, ThemePreference } from '../types';
 
 /**
  * Every setter writes to SQLite FIRST and only then updates the in-memory store and the live
@@ -27,9 +27,21 @@ export function usePreferences() {
 
   const setFont = useCallback(
     async (font: FontKey) => {
-      await loadFontsForKey(font);
+      try {
+        await loadFontsForKey(font);
+      } catch (e) {
+        console.warn('Failed to pre-load font:', font, e);
+      }
       await service.save('font', font);
       patch({ font });
+    },
+    [service, patch],
+  );
+
+  const setFontSize = useCallback(
+    async (fontSize: FontSizePreference) => {
+      await service.save('fontSize', fontSize);
+      patch({ fontSize });
     },
     [service, patch],
   );
@@ -51,6 +63,14 @@ export function usePreferences() {
     [service, patch],
   );
 
+  const setTermsAccepted = useCallback(
+    async (termsAccepted: boolean) => {
+      await service.save('termsAccepted', termsAccepted);
+      patch({ termsAccepted });
+    },
+    [service, patch],
+  );
+
   const saveMany = useCallback(
     async (values: Partial<AppPreferences>) => {
       await service.saveMany(values);
@@ -59,5 +79,14 @@ export function usePreferences() {
     [service, patch],
   );
 
-  return { preferences, setTheme, setFont, setLocale, setFlag, saveMany };
+  return {
+    preferences,
+    setTheme,
+    setFont,
+    setFontSize,
+    setLocale,
+    setFlag,
+    setTermsAccepted,
+    saveMany,
+  };
 }

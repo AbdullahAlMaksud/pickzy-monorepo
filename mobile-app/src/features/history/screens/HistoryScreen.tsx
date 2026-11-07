@@ -1,7 +1,8 @@
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { useCallback, useState } from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
-import { StyleSheet } from 'react-native-unistyles';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { ScreenContainer } from '@/components/layout/ScreenContainer';
 import { ScreenHeader } from '@/components/layout/ScreenHeader';
@@ -22,11 +23,19 @@ export function HistoryScreen() {
   const debounced = useDebouncedValue(search, 250);
   const list = useHistoryList(debounced, order);
   const open = useCallback((id: number) => router.push(`/history/${id}`), []);
+  const { theme } = useUnistyles();
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setStyle(theme.isDark ? 'light' : 'dark');
+    }, [theme.isDark])
+  );
 
   const searching = debounced.trim().length > 0;
 
   return (
     <ScreenContainer edges={['top']}>
+      <StatusBar style={theme.isDark ? 'light' : 'dark'} />
       <ScreenHeader title={t('title')} hideBack />
       <View style={styles.controls}>
         <SearchInput value={search} onChangeText={setSearch} placeholder={t('search')} testID="history-search" />

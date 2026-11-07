@@ -9,6 +9,7 @@ import { ErrorView } from '@/components/ui/ErrorView';
 import { ScreenContainer } from '@/components/layout/ScreenContainer';
 import { ServicesProvider } from '@/services/ServicesProvider';
 import i18n from '@/i18n';
+import { TermsAgreementModal } from './components/TermsAgreementModal';
 import { useBootstrap } from './useBootstrap';
 
 function RootLayoutContent() {
@@ -45,6 +46,7 @@ function RootLayoutContent() {
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="project/new" options={{ animation: 'slide_from_bottom' }} />
           </Stack>
+          <TermsAgreementModal />
           <ToastHost />
         </ServicesProvider>
       </SafeAreaProvider>

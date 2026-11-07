@@ -54,7 +54,7 @@ export const sizes = {
   avatar: { xs: 28, sm: 36, md: 44, lg: 56, xl: 104 },
   button: { compact: 38, regular: 52 },
   input: 50,
-  tabBar: 64,
+  tabBar: 86,
   headerHeight: 56,
   wheelMax: 380,
 } as const;
@@ -103,14 +103,14 @@ export const avatarPalette = [
 
 /** Solid avatar colors used in lists (white initial on color), as in the reference design. */
 export const avatarSolid = [
-  '#3FB67D',
-  '#4F6CF0',
-  '#E5484D',
-  '#B04FD0',
-  '#F5A524',
-  '#2FA9B8',
-  '#6C5CE7',
-  '#E8743B',
+  '#17181C',
+  '#4B4D56',
+  '#2D2E35',
+  '#5C5E6A',
+  '#383941',
+  '#6E707D',
+  '#212227',
+  '#43454E',
 ] as const;
 
 export function makeShadows(color: string, strength: number) {

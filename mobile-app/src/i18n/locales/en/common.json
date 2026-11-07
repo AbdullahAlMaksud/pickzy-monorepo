@@ -41,5 +41,15 @@
   "startup": {
     "title": "Pickzy can't start",
     "retry": "Try again"
+  },
+  "termsModal": {
+    "title": "Terms & Ethical Commitment",
+    "badge": "Ethical Use Pledge",
+    "prohibitionTitle": "Betting & Unlawful Use Strictly Prohibited",
+    "purpose": "Pickzy is created purely for positive, fun, and fair decision-making—such as giveaways, classroom draws, sports team picking, or friendly raffles.",
+    "prohibition": "Using this app for betting, wagering, gambling, or any activity prohibited in Islam (haram) is strictly forbidden and unethical.",
+    "request": "We sincerely urge you to use this tool only for constructive, lawful, and good purposes.",
+    "pledge": "I pledge that I will not use this app for betting, gambling, or prohibited activities.",
+    "agreeButton": "I Agree"
   }
 }

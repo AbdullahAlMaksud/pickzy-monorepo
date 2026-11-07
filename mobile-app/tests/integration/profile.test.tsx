@@ -17,13 +17,23 @@ describe('Profile screen', () => {
     expect((await services.preferences.load()).theme).toBe('dark');
   });
 
+  it('changes the font size and saves it to the database', async () => {
+    const { services } = await setupApp();
+    await renderWithApp(<ProfileScreen />, services);
+
+    await fireEvent.press(screen.getByTestId('row-fontSize'));
+    await fireEvent.press(await screen.findByTestId('option-large'));
+    await fireEvent.press(screen.getByTestId('picker-apply'));
+
+    await waitFor(() => expect(useAppStore.getState().preferences.fontSize).toBe('large'));
+    expect((await services.preferences.load()).fontSize).toBe('large');
+  });
+
   it('switches the language to Bengali, persists it and re-renders in Bengali', async () => {
     const { services } = await setupApp();
     await renderWithApp(<ProfileScreen />, services);
 
-    await fireEvent.press(screen.getByTestId('row-language'));
     await fireEvent.press(await screen.findByTestId('option-bn'));
-    await fireEvent.press(screen.getByTestId('picker-apply'));
 
     await waitFor(() => expect(i18n.language).toBe('bn'));
     expect((await services.preferences.load()).locale).toBe('bn');
@@ -35,7 +45,8 @@ describe('Profile screen', () => {
     const { services } = await setupApp();
     await renderWithApp(<ProfileScreen />, services);
 
-    await fireEvent.changeText(screen.getByTestId('profile-name-input'), '   Maksud   ');
+    await fireEvent.press(screen.getByTestId('edit-name-button'));
+    await fireEvent.changeText(await screen.findByTestId('profile-name-input'), '   Maksud   ');
     await fireEvent.press(screen.getByTestId('save-profile'));
 
     await waitFor(async () => expect((await services.preferences.load()).displayName).toBe('Maksud'));
@@ -66,5 +77,19 @@ describe('Profile screen', () => {
     await waitFor(async () => {
       expect((await services.preferences.load()).photoUri).toBeNull();
     });
+  });
+
+  it('renders app info section with version and developer text buttons', async () => {
+    const { services } = await setupApp();
+    await renderWithApp(<ProfileScreen />, services);
+
+    const versionBtn = screen.getByTestId('btn-app-version');
+    const developerBtn = screen.getByTestId('btn-developer');
+
+    expect(versionBtn).toBeTruthy();
+    expect(developerBtn).toBeTruthy();
+
+    await fireEvent.press(versionBtn);
+    await fireEvent.press(developerBtn);
   });
 });

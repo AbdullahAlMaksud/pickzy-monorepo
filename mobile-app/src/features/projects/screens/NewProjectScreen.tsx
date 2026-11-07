@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
-import { useCallback, useMemo, useState } from 'react';
-import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { FlatList, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { ScreenContainer } from '@/components/layout/ScreenContainer';
@@ -13,7 +13,7 @@ import { IconButton } from '@/components/ui/IconButton';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
-import { useLocale } from '@/hooks/useLocale';
+import { useKeyboard } from '@/hooks/useKeyboard';
 import { useServices } from '@/services/ServicesProvider';
 import { notifyDataChanged } from '@/store/appStore';
 import { showToast } from '@/store/toastStore';
@@ -35,7 +35,6 @@ const SEARCH_THRESHOLD = 8;
 
 export function NewProjectScreen() {
   const { t } = useTranslation(['projects', 'common']);
-  const { number } = useLocale();
   const { projects } = useServices();
   const draft = useDraftParticipants();
 
@@ -50,6 +49,14 @@ export function NewProjectScreen() {
   const [editingKey, setEditingKey] = useState<string | null>(null);
   const [confirmClear, setConfirmClear] = useState(false);
   const [saving, setSaving] = useState(false);
+  const keyboard = useKeyboard();
+  const listRef = useRef<FlatList<ParticipantItem>>(null);
+
+  const handleInputFocus = useCallback(() => {
+    setTimeout(() => {
+      listRef.current?.scrollToOffset({ offset: 190, animated: true });
+    }, 120);
+  }, []);
 
   const count = draft.items.length;
   const query = search.trim().toLocaleLowerCase();
@@ -140,7 +147,7 @@ export function NewProjectScreen() {
         />
         <View style={styles.tabBody}>
           {tab === 'manual' ? (
-            <AddNamesCard policy={policy} onPolicyChange={setPolicy} onAdd={handleManualAdd} message={message} />
+            <AddNamesCard policy={policy} onPolicyChange={setPolicy} onAdd={handleManualAdd} message={message} onFocus={handleInputFocus} />
           ) : (
             <ImportPanel
               existingNames={draft.items.map((i) => i.name)}
@@ -193,8 +200,13 @@ export function NewProjectScreen() {
   return (
     <ScreenContainer>
       <ScreenHeader title={t('new.title')} />
-      <KeyboardAvoidingView style={styles.fill} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <KeyboardAvoidingView
+        style={styles.fill}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 70 : 0}
+      >
         <ParticipantList
+          flatListRef={listRef}
           items={visible}
           mode={reorder && !query ? 'reorder' : 'default'}
           header={header}
@@ -209,14 +221,16 @@ export function NewProjectScreen() {
           onEdit={(id: ParticipantId) => setEditingKey(String(id))}
           onMove={(id: ParticipantId, dir) => draft.move(String(id), dir)}
         />
-        <View style={styles.footer}>
-          <AppButton
-            label={saving ? t('new.creating') : t('new.create', { count })}
-            onPress={handleCreate}
-            loading={saving}
-            testID="create-project"
-          />
-        </View>
+        {!keyboard.visible ? (
+          <View style={styles.footer}>
+            <AppButton
+              label={saving ? t('new.creating') : t('new.create', { count })}
+              onPress={handleCreate}
+              loading={saving}
+              testID="create-project"
+            />
+          </View>
+        ) : null}
       </KeyboardAvoidingView>
 
       <EditNameModal

@@ -113,7 +113,11 @@ describe('translation keys used in source code', () => {
       expect(profileEn.has(`themes.${theme}.name`)).toBe(true);
       expect(profileEn.has(`themes.${theme}.hint`)).toBe(true);
     }
-    for (const font of ['inter', 'poppins', 'roboto', 'nunito', 'opensans']) expect(profileEn.has(`fonts.${font}`)).toBe(true);
+    for (const font of ['playfair', 'opensans', 'anekbangla', 'purno']) expect(profileEn.has(`fonts.${font}`)).toBe(true);
+    for (const size of ['small', 'medium', 'large']) {
+      expect(profileEn.has(`fontSizes.${size}.name`)).toBe(true);
+      expect(profileEn.has(`fontSizes.${size}.hint`)).toBe(true);
+    }
     for (const locale of ['en', 'bn']) expect(profileEn.has(`languages.${locale}`)).toBe(true);
 
     const projectsEn = keysOf('en', 'projects');

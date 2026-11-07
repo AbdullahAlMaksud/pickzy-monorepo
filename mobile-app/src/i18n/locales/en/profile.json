@@ -3,6 +3,9 @@
   "defaultName": "Your name",
   "name": "Display name",
   "namePlaceholder": "How should we greet you?",
+  "editName": "Edit Name",
+  "enterName": "Enter your name",
+  "subtitle": "Make decisions fun",
   "save": "Save profile",
   "saved": "Profile saved",
   "changePhoto": "Change photo",
@@ -17,9 +20,16 @@
   "sectionAbout": "About",
   "theme": "Theme",
   "font": "Font Style",
+  "fontSize": "Font Size",
   "language": "Language",
+  "appLanguage": "App Language",
+  "languageSubtitles": {
+    "bn": "Bangla (Default)",
+    "en": "English"
+  },
   "chooseTheme": "Choose Theme",
   "chooseFont": "Choose Font",
+  "chooseFontSize": "Choose Font Size",
   "chooseLanguage": "Choose Language",
   "themes": {
     "system": {
@@ -40,14 +50,24 @@
     }
   },
   "fonts": {
-    "inter": "Modern and clean",
-    "poppins": "Friendly and modern",
-    "roboto": "Classic and readable",
-    "nunito": "Soft and elegant",
-    "opensans": "Simple and clear",
-    "anekbangla": "Modern and expressive Bengali",
-    "notosansbengali": "Clear and readable Bengali",
-    "bengaliNote": "Bengali text pairs Anek Bangla for titles and Noto Sans Bengali for body."
+    "playfair": "Classic high-contrast serif",
+    "opensans": "Clean, neutral and readable",
+    "anekbangla": "আধুনিক ও দৃষ্টিনন্দন — যেমন: আমার সোনার বাংলা",
+    "purno": "সাবলীল ও নান্দনিক — যেমন: বাংলা আমার অহংকার"
+  },
+  "fontSizes": {
+    "small": {
+      "name": "Small",
+      "hint": "Compact layout, fits more content"
+    },
+    "medium": {
+      "name": "Medium",
+      "hint": "Balanced, default recommendation"
+    },
+    "large": {
+      "name": "Large",
+      "hint": "Easier to read, high visibility"
+    }
   },
   "languages": {
     "en": "English",
@@ -61,6 +81,11 @@
     "title": "Works offline",
     "message": "Your projects, participants and results are stored only on this device. Pickzy needs no account and no internet connection."
   },
+  "appInfo": "App Info",
+  "versionLabel": "Version",
+  "developerLabel": "Built by",
+  "developerName": "Abdullah Al Maksud",
+  "developerInfo": "Developer: Abdullah Al Maksud",
   "about": {
     "version": "Version {{version}}",
     "title": "About Pickzy"

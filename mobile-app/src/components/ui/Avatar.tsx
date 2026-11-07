@@ -12,17 +12,29 @@ interface AvatarProps {
   size?: number;
   /** Stable index (e.g. list position) used to pick a color. */
   colorIndex?: number;
+  shape?: 'circle' | 'squircle';
+  showBorder?: boolean;
   testID?: string;
 }
 
-function AvatarBase({ name = '', photoUri, size = 40, colorIndex = 0, testID }: AvatarProps) {
-  const radius = size / 2;
+function AvatarBase({
+  name = '',
+  photoUri,
+  size = 40,
+  colorIndex = 0,
+  shape = 'circle',
+  showBorder = false,
+  testID,
+}: AvatarProps) {
+  const radius = shape === 'squircle' ? Math.round(size * 0.32) : size / 2;
+  const borderStyle = showBorder ? { borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.85)' } : undefined;
+
   if (photoUri) {
     return (
       <Image
         testID={testID}
         source={{ uri: photoUri }}
-        style={{ width: size, height: size, borderRadius: radius }}
+        style={[{ width: size, height: size, borderRadius: radius }, borderStyle]}
         accessibilityIgnoresInvertColors
       />
     );
@@ -31,7 +43,16 @@ function AvatarBase({ name = '', photoUri, size = 40, colorIndex = 0, testID }: 
   return (
     <View
       testID={testID}
-      style={[styles.circle, { width: size, height: size, borderRadius: radius, backgroundColor: name ? color : undefined }]}
+      style={[
+        styles.circle,
+        {
+          width: size,
+          height: size,
+          borderRadius: radius,
+          backgroundColor: name ? color : undefined,
+        },
+        borderStyle,
+      ]}
       importantForAccessibility="no-hide-descendants"
       accessibilityElementsHidden
     >

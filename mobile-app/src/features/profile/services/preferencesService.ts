@@ -3,10 +3,12 @@ import type { Database } from '@/database/types';
 import { isFontKey } from '@/theme/typography';
 import {
   DEFAULT_PREFERENCES,
+  FONT_SIZE_PREFERENCES,
   LOCALES,
   PREFERENCE_KEYS,
   THEME_PREFERENCES,
   type AppPreferences,
+  type FontSizePreference,
   type LocaleCode,
   type ThemePreference,
 } from '../types';
@@ -26,6 +28,7 @@ const asBool = (value: string | undefined, fallback: boolean) =>
 export function parsePreferences(raw: Record<string, string>): AppPreferences {
   const theme = raw[PREFERENCE_KEYS.theme];
   const font = raw[PREFERENCE_KEYS.font];
+  const fontSize = raw[PREFERENCE_KEYS.fontSize];
   const locale = raw[PREFERENCE_KEYS.locale];
   const photo = raw[PREFERENCE_KEYS.photoUri];
   return {
@@ -35,11 +38,15 @@ export function parsePreferences(raw: Record<string, string>): AppPreferences {
       ? (theme as ThemePreference)
       : DEFAULT_PREFERENCES.theme,
     font: isFontKey(font) ? font : DEFAULT_PREFERENCES.font,
+    fontSize: (FONT_SIZE_PREFERENCES as readonly string[]).includes(fontSize)
+      ? (fontSize as FontSizePreference)
+      : DEFAULT_PREFERENCES.fontSize,
     locale: (LOCALES as readonly string[]).includes(locale)
       ? (locale as LocaleCode)
       : DEFAULT_PREFERENCES.locale,
     haptics: asBool(raw[PREFERENCE_KEYS.haptics], DEFAULT_PREFERENCES.haptics),
     confetti: asBool(raw[PREFERENCE_KEYS.confetti], DEFAULT_PREFERENCES.confetti),
+    termsAccepted: asBool(raw[PREFERENCE_KEYS.termsAccepted], DEFAULT_PREFERENCES.termsAccepted),
   };
 }
 

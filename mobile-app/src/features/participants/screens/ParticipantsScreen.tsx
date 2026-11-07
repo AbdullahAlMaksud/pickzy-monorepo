@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
-import { useCallback, useMemo, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { FlatList, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { ScreenContainer } from '@/components/layout/ScreenContainer';
@@ -15,6 +15,7 @@ import { IconButton } from '@/components/ui/IconButton';
 import { LoadingView } from '@/components/ui/LoadingView';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { useAsyncQuery } from '@/hooks/useAsyncQuery';
+import { useKeyboard } from '@/hooks/useKeyboard';
 import { useServices } from '@/services/ServicesProvider';
 import { notifyDataChanged } from '@/store/appStore';
 import { showToast } from '@/store/toastStore';
@@ -55,6 +56,14 @@ export function ParticipantsScreen({ projectId }: { projectId: number }) {
   const [importOpen, setImportOpen] = useState(false);
   const [projectOpen, setProjectOpen] = useState(false);
   const [dialog, setDialog] = useState<Dialog>(null);
+  const keyboard = useKeyboard();
+  const listRef = useRef<FlatList<ParticipantItem>>(null);
+
+  const handleInputFocus = useCallback(() => {
+    setTimeout(() => {
+      listRef.current?.scrollToOffset({ offset: 0, animated: true });
+    }, 120);
+  }, []);
 
   const data = query.data;
   const all = data?.participants;
@@ -171,7 +180,7 @@ export function ParticipantsScreen({ projectId }: { projectId: number }) {
         <AppText variant="heading" accessibilityRole="header" style={styles.cardTitle}>
           {t('manage.addTitle')}
         </AppText>
-        <AddNamesCard policy={policy} onPolicyChange={setPolicy} onAdd={handleAdd} message={message}>
+        <AddNamesCard policy={policy} onPolicyChange={setPolicy} onAdd={handleAdd} message={message} onFocus={handleInputFocus}>
           <AppButton label={t('manage.importMore')} icon="upload" variant="secondary" compact onPress={() => setImportOpen(true)} testID="open-import" />
         </AddNamesCard>
       </AppCard>
@@ -246,8 +255,13 @@ export function ParticipantsScreen({ projectId }: { projectId: number }) {
         subtitle={t('common:participants', { count })}
         right={<IconButton icon="pencil" label={t('manage.editProject')} onPress={() => setProjectOpen(true)} testID="edit-project" />}
       />
-      <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 70 : 0}
+      >
         <ParticipantList
+          flatListRef={listRef}
           items={items}
           mode={mode === 'reorder' && q ? 'default' : mode}
           selectedIds={selected}
@@ -264,15 +278,17 @@ export function ParticipantsScreen({ projectId }: { projectId: number }) {
           onMove={move}
           onToggleSelect={toggleSelect}
         />
-        <View style={styles.footer}>
-          <AppButton
-            label={t('manage.startSpinning')}
-            icon="arrow-right"
-            disabled={count === 0}
-            onPress={() => router.push(`/project/${projectId}`)}
-            testID="start-spinning"
-          />
-        </View>
+        {!keyboard.visible ? (
+          <View style={styles.footer}>
+            <AppButton
+              label={t('manage.startSpinning')}
+              icon="arrow-right"
+              disabled={count === 0}
+              onPress={() => router.push(`/project/${projectId}`)}
+              testID="start-spinning"
+            />
+          </View>
+        ) : null}
       </KeyboardAvoidingView>
 
       <AppModal visible={importOpen} onClose={() => setImportOpen(false)} title={t('import.title')} variant="sheet">

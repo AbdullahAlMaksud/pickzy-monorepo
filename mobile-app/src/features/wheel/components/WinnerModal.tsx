@@ -1,6 +1,6 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { AccessibilityInfo, Modal, View, useWindowDimensions } from 'react-native';
-import Animated, { ZoomIn, useReducedMotion } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut, useReducedMotion } from 'react-native-reanimated';
 import { StyleSheet } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { ConfettiEffect } from '@/components/feedback/ConfettiEffect';
@@ -50,6 +50,22 @@ function WinnerModalBase({
   const { width, height } = useWindowDimensions();
   const reducedMotion = useReducedMotion();
   const confettiEnabled = useAppStore((s) => s.preferences.confetti);
+  const [mounted, setMounted] = useState(visible);
+
+  const EXIT_DURATION = 160;
+
+  if (visible && !mounted) {
+    setMounted(true);
+  }
+
+  useEffect(() => {
+    if (!visible && mounted) {
+      const timer = setTimeout(() => {
+        setMounted(false);
+      }, EXIT_DURATION);
+      return () => clearTimeout(timer);
+    }
+  }, [visible, mounted]);
 
   const { ordinal } = useLocale();
   const place = ordinal(order);
@@ -62,14 +78,20 @@ function WinnerModalBase({
   }, [visible, announcement]);
 
   return (
-    <Modal visible={visible} transparent animationType="fade" statusBarTranslucent navigationBarTranslucent onRequestClose={onClose}>
-      <View style={styles.overlay}>
+    <Modal visible={mounted} transparent animationType="none" statusBarTranslucent navigationBarTranslucent onRequestClose={onClose}>
+      {visible ? (
         <Animated.View
-          entering={reducedMotion ? undefined : ZoomIn.springify().damping(14)}
-          style={styles.card}
-          accessibilityViewIsModal
-          testID="winner-modal"
+          entering={reducedMotion ? undefined : FadeIn.duration(180)}
+          exiting={reducedMotion ? undefined : FadeOut.duration(EXIT_DURATION)}
+          style={styles.overlay}
         >
+          <Animated.View
+            entering={reducedMotion ? undefined : ZoomIn.duration(200)}
+            exiting={reducedMotion ? undefined : ZoomOut.duration(EXIT_DURATION)}
+            style={styles.card}
+            accessibilityViewIsModal
+            testID="winner-modal"
+          >
           <View style={styles.crownWrap}>
             <Icon name="crown" size="xl" color="gold" />
           </View>
@@ -133,8 +155,9 @@ function WinnerModalBase({
           width={width}
           height={height}
         />
-      </View>
-    </Modal>
+      </Animated.View>
+    ) : null}
+  </Modal>
   );
 }
 

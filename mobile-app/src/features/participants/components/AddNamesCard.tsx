@@ -16,11 +16,12 @@ interface AddNamesCardProps {
   onAdd: (names: string[], blankSkipped: number) => boolean | void | Promise<boolean | void>;
   /** Result line shown under the field, e.g. "2 duplicates skipped". */
   message?: string | null;
+  onFocus?: () => void;
   children?: ReactNode;
 }
 
 /** Quick-add field: one name, or several names separated by new lines. */
-function AddNamesCardBase({ policy, onPolicyChange, onAdd, message, children }: AddNamesCardProps) {
+function AddNamesCardBase({ policy, onPolicyChange, onAdd, message, onFocus, children }: AddNamesCardProps) {
   const { t } = useTranslation('projects');
   const [text, setText] = useState('');
   const [error, setError] = useState<string | undefined>();
@@ -57,6 +58,8 @@ function AddNamesCardBase({ policy, onPolicyChange, onAdd, message, children }: 
             placeholder={t('add.placeholder')}
             multiline
             multilineMinHeight={50}
+            multilineMaxHeight={130}
+            onFocus={onFocus}
             error={error}
             testID="add-names-input"
           />

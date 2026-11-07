@@ -46,12 +46,12 @@ const styles = StyleSheet.create((theme) => ({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
-    borderWidth: 5,
-    borderColor: theme.colors.stageRing,
+    backgroundColor: theme.colors.surface,
+    borderWidth: 4,
+    borderColor: theme.isDark ? '#2C2D33' : '#121316',
     ...theme.shadows.lg,
     variants: { disabled: { true: { opacity: 0.9 }, false: {} } },
   },
   pressed: { transform: [{ scale: 0.96 }] },
-  label: { color: '#16162E', paddingHorizontal: 6 },
+  label: { color: theme.colors.text, paddingHorizontal: 6 },
 }));

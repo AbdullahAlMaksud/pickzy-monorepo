@@ -13,14 +13,32 @@ interface Props {
 
 export function FontSelector({ visible, value, onClose, onApply }: Props) {
   const { t } = useTranslation('profile');
-  const options: PickerOption<FontKey>[] = FONT_OPTIONS.map((f) => ({
-    value: f.key,
-    title: f.label,
-    subtitle: t(`fonts.${f.key}`),
-    leading: (
-      <Text style={[styles.sample, { fontFamily: resolveFontFamily({ fontKey: f.key, locale: 'en', weight: 'semibold' }) }]}>Aa</Text>
-    ),
-  }));
+  const options: PickerOption<FontKey>[] = FONT_OPTIONS.map((f) => {
+    const isBengali = f.key === 'anekbangla' || f.key === 'purno';
+    const titleFont = resolveFontFamily({
+      fontKey: f.key,
+      locale: isBengali ? 'bn' : 'en',
+      weight: 'semibold',
+    });
+    const bodyFont = resolveFontFamily({
+      fontKey: f.key,
+      locale: isBengali ? 'bn' : 'en',
+      weight: 'regular',
+    });
+
+    return {
+      value: f.key,
+      title: f.label,
+      subtitle: t(`fonts.${f.key}`),
+      titleFontFamily: titleFont,
+      subtitleFontFamily: bodyFont,
+      leading: (
+        <Text style={[styles.sample, { fontFamily: titleFont }]}>
+          {isBengali ? 'অআ' : 'Aa'}
+        </Text>
+      ),
+    };
+  });
   return (
     <OptionPickerModal
       visible={visible}

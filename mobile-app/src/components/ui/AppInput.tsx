@@ -13,10 +13,23 @@ export interface AppInputProps extends Omit<TextInputProps, 'style'> {
   /** Right-aligned text under the field, e.g. "12/60". */
   counter?: string;
   multilineMinHeight?: number;
+  multilineMaxHeight?: number;
 }
 
 const AppInputBase = forwardRef<ComponentRef<typeof TextInput>, AppInputProps>(function AppInput(
-  { label, error, hint, counter, multiline, multilineMinHeight = 96, onFocus, onBlur, value, ...rest },
+  {
+    label,
+    error,
+    hint,
+    counter,
+    multiline,
+    multilineMinHeight = 96,
+    multilineMaxHeight,
+    onFocus,
+    onBlur,
+    value,
+    ...rest
+  },
   ref,
 ) {
   const { theme } = useUnistyles();
@@ -53,7 +66,13 @@ const AppInputBase = forwardRef<ComponentRef<typeof TextInput>, AppInputProps>(f
         style={[
           styles.input,
           { fontFamily },
-          multiline ? { minHeight: multilineMinHeight, textAlignVertical: 'top' } : null,
+          multiline
+            ? {
+                minHeight: multilineMinHeight,
+                maxHeight: multilineMaxHeight ?? 160,
+                textAlignVertical: 'top',
+              }
+            : null,
         ]}
         {...rest}
       />

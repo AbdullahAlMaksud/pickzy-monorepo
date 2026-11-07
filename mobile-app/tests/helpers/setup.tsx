@@ -1,7 +1,7 @@
 // Global Jest setup: Unistyles mock (no native runtime in Jest), Reanimated and native module mocks.
 import 'react-native-unistyles/mocks';
 import mockReact from 'react';
-import { Text as MockText } from 'react-native';
+import { Switch as MockRNSwitch, Text as MockText, View as MockView } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { themes } from '@/theme/themes';
 import { breakpoints } from '@/theme/tokens';
@@ -26,6 +26,47 @@ jest.mock('expo-haptics', () => ({
 jest.mock('@react-native-vector-icons/lucide/static', () => ({
   Lucide: ({ name }: { name: string }) => <MockText>{`icon:${name}`}</MockText>,
 }));
+jest.mock('react-native-svg', () => {
+  const makeMock = (displayName: string) => {
+    const Comp = (props: Record<string, unknown>) =>
+      mockReact.createElement(displayName, props, props.children as mockReact.ReactNode);
+    Comp.displayName = displayName;
+    return Comp;
+  };
+  const SvgMock = (props: Record<string, unknown>) =>
+    mockReact.createElement(MockView, props, props.children as mockReact.ReactNode);
+  return {
+    __esModule: true,
+    default: SvgMock,
+    Svg: SvgMock,
+    Defs: makeMock('Defs'),
+    LinearGradient: makeMock('LinearGradient'),
+    Stop: makeMock('Stop'),
+    Path: makeMock('Path'),
+    G: makeMock('G'),
+    Rect: makeMock('Rect'),
+    Circle: makeMock('Circle'),
+  };
+});
+jest.mock('@expo/ui/jetpack-compose', () => {
+  const MockSwitch = (props: {
+    value?: boolean;
+    onCheckedChange?: (v: boolean) => void;
+    enabled?: boolean;
+    testID?: string;
+  }) =>
+    mockReact.createElement(MockRNSwitch, {
+      value: props.value,
+      onValueChange: props.onCheckedChange,
+      disabled: props.enabled === false,
+      testID: props.testID,
+    });
+  return {
+    Host: (props: { children?: mockReact.ReactNode }) =>
+      mockReact.createElement(MockView, props, props.children),
+    Switch: MockSwitch,
+  };
+});
 
 jest.mock('expo-router', () => ({
   router: {

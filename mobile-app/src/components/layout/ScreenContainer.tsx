@@ -29,7 +29,7 @@ export function ScreenContainer({
   );
   if (!keyboardAvoiding) return content;
   return (
-    <KeyboardAvoidingView style={styles.fill} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAvoidingView style={styles.fill} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       {content}
     </KeyboardAvoidingView>
   );

@@ -31,16 +31,21 @@ function ActionCardBase({ icon, title, subtitle, variant, onPress, testID }: Pro
       style={({ pressed }) => [styles.card, pressed && styles.pressed]}
     >
       <View style={styles.icon}>
-        <Icon name={icon} size="lg" color={primary ? 'onPrimary' : 'primary'} />
+        <Icon name={icon} size="lg" color={primary ? 'onPrimary' : 'text'} />
       </View>
       <View style={styles.text}>
-        <AppText variant="heading" tone={primary ? 'onPrimary' : 'text'}>
+        <AppText variant="heading" weight="bold" tone={primary ? 'onPrimary' : 'text'}>
           {title}
         </AppText>
-        <AppText variant="caption" tone={primary ? 'onPrimary' : 'secondary'} style={primary ? styles.subtitleOnPrimary : undefined}>
+        <AppText
+          variant="caption"
+          tone={primary ? 'onPrimary' : 'secondary'}
+          style={primary ? styles.subtitleOnPrimary : styles.subtitle}
+        >
           {subtitle}
         </AppText>
       </View>
+      <Icon name="arrow-right" size="sm" color={primary ? 'onPrimary' : 'text'} />
     </Pressable>
   );
 }
@@ -56,8 +61,16 @@ const styles = StyleSheet.create((theme) => ({
     borderRadius: theme.radii.xl,
     variants: {
       variant: {
-        primary: { backgroundColor: theme.colors.primary, ...theme.shadows.md },
-        soft: { backgroundColor: theme.colors.primarySoft },
+        primary: {
+          backgroundColor: theme.colors.primary,
+          ...theme.shadows.md,
+        },
+        soft: {
+          backgroundColor: theme.colors.surface,
+          borderWidth: 1,
+          borderColor: theme.colors.border,
+          ...theme.shadows.sm,
+        },
       },
     },
   },
@@ -70,11 +83,12 @@ const styles = StyleSheet.create((theme) => ({
     justifyContent: 'center',
     variants: {
       variant: {
-        primary: { backgroundColor: 'rgba(255,255,255,0.22)' },
-        soft: { backgroundColor: theme.colors.surface },
+        primary: { backgroundColor: 'rgba(255,255,255,0.18)' },
+        soft: { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radii.md },
       },
     },
   },
-  text: { flex: 1, gap: 2 },
-  subtitleOnPrimary: { opacity: 0.9 },
+  text: { flex: 1, gap: 3 },
+  subtitleOnPrimary: { opacity: 0.75 },
+  subtitle: { color: theme.colors.textSecondary },
 }));

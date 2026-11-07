@@ -1,5 +1,9 @@
 {
-  "tagline": "Make decisions fun",
+  "tagline": "Find random winner by spinning wheel",
+  "createProject": "Create Project",
+  "myProject": "My Project",
+  "noProject": "No project created yet",
+  "recentHeader": "Recent",
   "greeting": {
     "morning": "Good morning",
     "afternoon": "Good afternoon",

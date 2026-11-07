@@ -6,6 +6,8 @@ module.exports = {
   testMatch: ['<rootDir>/tests/**/*.test.ts?(x)'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^@public$': '<rootDir>/public/index',
+    '^@public/(.*)$': '<rootDir>/public/$1',
   },
   setupFilesAfterEnv: ['<rootDir>/tests/helpers/setup.tsx'],
   transformIgnorePatterns: [

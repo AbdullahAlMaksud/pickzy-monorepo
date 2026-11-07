@@ -19,7 +19,6 @@ import type { DrawParticipant } from '../types';
 import {
   computeLabelLayout,
   normalizeDegrees,
-  segmentAngle,
   segmentCenterAngle,
   truncateLabel,
 } from '../services/wheelGeometry';
@@ -140,13 +139,13 @@ function SpinWheelBase(
               cy={radius}
               radius={discRadius}
               color={colors[segmentColorIndex(i, count, colors.length)]}
-              separator={theme.colors.stage}
+              separator={theme.isDark ? '#121316' : '#FFFFFF'}
             />
           ))}
         </G>
       </Svg>
     ),
-    [items, count, size, radius, rimWidth, discRadius, colors, theme.colors.stage, theme.colors.stageRing, theme.colors.stageTextMuted],
+    [items, count, size, radius, rimWidth, discRadius, colors, theme.isDark, theme.colors.stageRing, theme.colors.stageTextMuted],
   );
 
   // Labels are plain RN <Text> rotated about the wheel center, so they use the same font pipeline

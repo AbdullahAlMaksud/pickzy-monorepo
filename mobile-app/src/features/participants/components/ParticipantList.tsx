@@ -16,6 +16,7 @@ interface ParticipantListProps {
   empty?: ReactElement | null;
   footerSpace?: number;
   contentContainerStyle?: StyleProp<ViewStyle>;
+  flatListRef?: React.RefObject<FlatList<ParticipantItem> | null>;
   onRemove?: (id: ParticipantId) => void;
   onEdit?: (id: ParticipantId) => void;
   onMove?: (id: ParticipantId, direction: 'up' | 'down') => void;
@@ -36,6 +37,7 @@ export function ParticipantList({
   empty,
   footerSpace = 24,
   contentContainerStyle,
+  flatListRef,
   onRemove,
   onEdit,
   onMove,
@@ -64,6 +66,7 @@ export function ParticipantList({
 
   return (
     <FlatList
+      ref={flatListRef}
       data={items}
       keyExtractor={(item) => String(item.id)}
       renderItem={renderItem}
@@ -74,6 +77,7 @@ export function ParticipantList({
       contentContainerStyle={[styles.content, contentContainerStyle]}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
+      automaticallyAdjustKeyboardInsets={true}
       initialNumToRender={14}
       maxToRenderPerBatch={16}
       windowSize={9}

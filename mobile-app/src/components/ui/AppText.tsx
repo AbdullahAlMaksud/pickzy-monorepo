@@ -5,6 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/store/appStore';
 import { resolveFontFamily } from '@/theme/typography';
 import { lineHeightScale, type FontWeightName } from '@/theme/tokens';
+import type { FontSizePreference } from '@/features/profile/types';
+
+export const FONT_SCALE: Record<FontSizePreference, number> = {
+  small: 0.9,
+  medium: 1.0,
+  large: 1.15,
+};
 
 export type TextVariant = 'display' | 'title' | 'heading' | 'body' | 'label' | 'caption' | 'micro';
 export type TextTone =
@@ -65,6 +72,7 @@ function AppTextBase({
 }: AppTextProps) {
   const { i18n } = useTranslation();
   const fontKey = useAppStore((s) => s.preferences.font);
+  const fontSizePref = useAppStore((s) => s.preferences.fontSize ?? 'medium');
   const locale = i18n.language?.startsWith('bn') ? 'bn' : 'en';
   const resolvedWeight = weight ?? DEFAULT_WEIGHT[variant];
   const fontFamily = resolveFontFamily({
@@ -74,7 +82,8 @@ function AppTextBase({
     text: extractText(children),
     variant,
   });
-  const size = FONT_SIZE[variant];
+  const scale = FONT_SCALE[fontSizePref] ?? 1.0;
+  const size = Math.round(FONT_SIZE[variant] * scale);
   const lineHeight = Math.round(
     size * (locale === 'bn' ? lineHeightScale.bengali : lineHeightScale.latin),
   );
