@@ -51,8 +51,9 @@ describe('WinnerDialog', () => {
   });
 
   it('shoots confetti only when the preference is on', async () => {
-    await renderApp(<WinnerDialog {...baseProps} />, { preferences: { confetti: true } });
+    const { unmount: unmountFirst } = await renderApp(<WinnerDialog {...baseProps} />, { preferences: { confetti: true } });
     await vi.waitFor(() => expect(confetti).toHaveBeenCalled());
+    unmountFirst();
 
     confetti.mockClear();
     const { unmount } = await renderApp(<WinnerDialog {...baseProps} />, { preferences: { confetti: false } });

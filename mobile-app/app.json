@@ -10,7 +10,7 @@
     "backgroundColor": "#F7F6FF",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "app.abdullahalmaksud.pickzy",
+      "bundleIdentifier": "com.abdullahalmaksud.pickzy",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
         "CFBundleLocalizations": [
@@ -20,7 +20,7 @@
       }
     },
     "android": {
-      "package": "app.abdullahalmaksud.pickzy",
+      "package": "com.abdullahalmaksud.pickzy",
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF",
         "foregroundImage": "./public/images/app-icon/android-icon-foreground.png",
