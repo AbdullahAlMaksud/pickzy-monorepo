@@ -12,8 +12,8 @@ interface LanguageOption {
 }
 
 const LANGUAGE_OPTIONS: readonly LanguageOption[] = [
-  { code: 'bn', badge: 'BN' },
   { code: 'en', badge: 'EN' },
+  { code: 'bn', badge: 'BN' },
 ];
 
 interface LanguageSectionProps {

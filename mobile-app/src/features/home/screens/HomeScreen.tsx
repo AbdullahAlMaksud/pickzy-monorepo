@@ -47,21 +47,6 @@ export function HomeScreen() {
   const data = query.data;
   const hasProjects = !!(data && data.recent.length > 0);
 
-  const renderCreateProjectCard = () => (
-    <Pressable
-      onPress={() => router.push('/project/new')}
-      style={({ pressed }) => [styles.createProjectCard, pressed && styles.cardPressed]}
-      testID="create-new-project"
-      accessibilityRole="button"
-      accessibilityLabel={t('home:createProject')}
-    >
-      <Icon name="plus" size="lg" color="#FFFFFF" />
-      <AppText variant="label" weight="medium" style={styles.createProjectText}>
-        {t('home:createProject')}
-      </AppText>
-    </Pressable>
-  );
-
   const renderDashboardRow = () => (
     <View style={styles.dashboardRow}>
       {/* Left: My Project Card */}
@@ -162,24 +147,26 @@ export function HomeScreen() {
               /* Screen 1: Empty state ordering */
               <>
                 {renderDashboardRow()}
-                <View style={styles.sectionSpacer}>
-                  {renderCreateProjectCard()}
-                </View>
 
-                <View style={styles.emptyContainer} testID="home-empty">
-                  <View style={styles.dashedBox} />
+                <Pressable
+                  onPress={() => router.push('/project/new')}
+                  style={({ pressed }) => [styles.emptyContainer, pressed && styles.emptyPressed]}
+                  testID="home-empty"
+                  accessibilityRole="button"
+                  accessibilityLabel={t('home:createProject')}
+                >
+                  <View style={styles.dashedBox}>
+                    <Icon name="plus" size="md" color="textSecondary" />
+                  </View>
                   <AppText variant="caption" tone="secondary" style={styles.emptyText}>
                     {t('home:noProject')}
                   </AppText>
-                </View>
+                </Pressable>
               </>
             ) : (
               /* Screen 2 & 3: Projects exist ordering */
               <>
-                {renderCreateProjectCard()}
-                <View style={styles.sectionSpacer}>
-                  {renderDashboardRow()}
-                </View>
+                {renderDashboardRow()}
 
                 {/* Recent Section Header */}
                 <View style={styles.recentHeaderRow}>
@@ -255,6 +242,7 @@ const styles = StyleSheet.create((theme, rt) => ({
     position: 'relative',
   },
   scrollContent: {
+    flexGrow: 1,
     paddingBottom: 110,
   },
   bannerContainer: {
@@ -293,27 +281,13 @@ const styles = StyleSheet.create((theme, rt) => ({
     textAlign: 'center',
   },
   mainSheet: {
+    flex: 1,
     backgroundColor: theme.colors.background,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     marginTop: -22,
     paddingHorizontal: theme.spacing.lg,
     paddingTop: theme.spacing.lg,
-  },
-  sectionSpacer: {
-    marginTop: theme.spacing.md,
-  },
-  createProjectCard: {
-    backgroundColor: '#000000',
-    borderRadius: 22,
-    height: 140,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
-    ...theme.shadows.md,
-  },
-  createProjectText: {
-    color: '#FFFFFF',
   },
   cardPressed: {
     opacity: 0.9,
@@ -368,18 +342,25 @@ const styles = StyleSheet.create((theme, rt) => ({
     fontSize: 18,
   },
   emptyContainer: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 54,
+    paddingVertical: theme.spacing.xxxl,
+    minHeight: 280,
     gap: 14,
   },
+  emptyPressed: {
+    opacity: 0.6,
+  },
   dashedBox: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
+    width: 48,
+    height: 48,
+    borderRadius: 16,
     borderWidth: 1.5,
     borderStyle: 'dashed',
     borderColor: theme.colors.borderStrong,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   emptyText: {
     color: theme.colors.textSecondary,

@@ -162,6 +162,11 @@ export function ProfileScreen() {
         ) : null}
       </View>
 
+      <LanguageSection
+        currentLocale={preferences.locale}
+        onSelectLocale={setLocale}
+      />
+
       <SettingsGroup title={t('profile:sectionAppearance')}>
         <SettingRow
           icon="palette"
@@ -189,10 +194,6 @@ export function ProfileScreen() {
         />
       </SettingsGroup>
 
-      <LanguageSection
-        currentLocale={preferences.locale}
-        onSelectLocale={setLocale}
-      />
 
       <SettingsGroup title={t('profile:sectionPreferences')}>
         <SettingRow
@@ -209,21 +210,24 @@ export function ProfileScreen() {
         />
       </SettingsGroup>
 
+
+
+      <AppInfoSection version={version} />
+
+
       <AppCard tone="soft">
         <View style={styles.offline}>
-          <Icon name="wifi-off" size="md" color="primary" />
+          <Icon name="globe-2" size="xl" color="primary" />
           <View style={styles.offlineText}>
             <AppText variant="label" weight="semibold">
               {t('profile:offline.title')}
             </AppText>
-            <AppText variant="caption" tone="secondary">
+            <AppText align='center' variant="caption" tone="secondary">
               {t('profile:offline.message')}
             </AppText>
           </View>
         </View>
       </AppCard>
-
-      <AppInfoSection version={version} />
 
       <ThemeSelector
         visible={picker === 'theme'}
@@ -321,6 +325,12 @@ const styles = StyleSheet.create((theme) => ({
   displayName: {
     color: theme.colors.text,
   },
-  offline: { flexDirection: 'row', gap: theme.spacing.md, alignItems: 'flex-start' },
-  offlineText: { flex: 1, gap: 2 },
+  offline: {
+    flexDirection: 'column',
+    gap: theme.spacing.md,
+    justifyContent: "center",
+    alignItems: 'center',
+    // alignItems: 'flex-start'
+  },
+  offlineText: { flex: 1, gap: 2, textAlign: "center", alignItems: 'center' },
 }));

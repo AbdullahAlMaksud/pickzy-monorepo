@@ -18,8 +18,8 @@ export function BottomNavigation({ state, emitter, navigateToTab }: BottomTabBar
   const insets = useSafeAreaInsets();
   const bottomInset = Math.max(insets.bottom, 28);
 
-  const activeColor = theme.isDark ? theme.colors.text : theme.colors.onPrimary;
-  const inactiveColor = theme.isDark ? theme.colors.textSecondary : 'rgba(255, 255, 255, 0.6)';
+  const activeColor = theme.colors.text;
+  const inactiveColor = theme.colors.textSecondary;
 
   return (
     <View style={styles.container}>
@@ -87,10 +87,13 @@ const styles = StyleSheet.create((theme) => ({
     position: 'relative',
     overflow: 'hidden',
     flexDirection: 'row',
-    backgroundColor: theme.isDark ? theme.colors.surfaceRaised : theme.colors.primary,
+    backgroundColor: theme.colors.surfaceRaised,
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
+    borderTopWidth: 1,
+    borderColor: theme.colors.border,
     paddingTop: 14,
+    ...theme.shadows.md,
   },
   item: {
     flex: 1,
@@ -108,7 +111,7 @@ const styles = StyleSheet.create((theme) => ({
     overflow: 'hidden',
   },
   indicatorActive: {
-    backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(255, 255, 255, 0.16)',
+    backgroundColor: theme.isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)',
     borderRadius: 16,
     overflow: 'hidden',
   },
