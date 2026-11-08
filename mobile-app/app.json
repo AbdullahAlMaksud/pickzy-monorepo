@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "Pickzy",
-    "slug": "pickzy",
     "version": "1.0.0",
+    "slug": "pickzy",
     "scheme": "pickzy",
     "orientation": "portrait",
     "icon": "./public/images/app-icon/ios-icon-default.png",
@@ -24,7 +24,6 @@
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF",
         "foregroundImage": "./public/images/app-icon/android-icon-foreground.png",
-        "backgroundImage": "./public/images/app-icon/android-icon-background.png",
         "monochromeImage": "./public/images/app-icon/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false
@@ -40,7 +39,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./public/images/splash-icon.png",
+          "image": "./public/images/app-icon/splash-icon-light.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#FFFFFF"
