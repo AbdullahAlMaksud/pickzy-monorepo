@@ -6,7 +6,7 @@
     "noImplicitOverride": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "types": ["jest", "node"],
+    "types": ["jest", "node", "react-test-renderer"],
     "paths": {
       "@/*": ["./src/*"],
       "@public/*": ["./public/*"],

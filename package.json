@@ -1,0 +1,31 @@
+{
+  "name": "pickzy-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "prepare": "husky",
+    "validate": "bun run validate:mobile && bun run validate:landing",
+    "validate:mobile": "bun --cwd mobile-app check",
+    "validate:landing": "bun --cwd landing-portal check",
+    "check": "bun run validate",
+    "prebuild": "bun --cwd mobile-app prebuild",
+    "prebuild:clean": "bun --cwd mobile-app prebuild",
+    "android": "bun --cwd mobile-app android",
+    "ios": "bun --cwd mobile-app ios",
+    "start": "bun --cwd mobile-app start",
+    "start:mobile": "bun --cwd mobile-app start",
+    "start:web": "bun --cwd landing-portal dev",
+    "dev:mobile": "bun --cwd mobile-app start",
+    "dev:web": "bun --cwd landing-portal dev",
+    "build:web": "bun --cwd landing-portal build",
+    "test": "bun --cwd mobile-app test && bun --cwd landing-portal test",
+    "lint": "bun --cwd mobile-app lint && bun --cwd landing-portal lint",
+    "typecheck": "bun --cwd mobile-app typecheck && bun --cwd landing-portal typecheck",
+    "doctor": "bun --cwd mobile-app doctor"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "husky": "^9.1.7"
+  }
+}
