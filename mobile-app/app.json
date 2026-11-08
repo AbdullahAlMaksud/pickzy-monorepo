@@ -66,7 +66,8 @@
         {
           "photosPermission": "Pickzy uses your photos only to set your profile picture. The photo stays on this device."
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true
