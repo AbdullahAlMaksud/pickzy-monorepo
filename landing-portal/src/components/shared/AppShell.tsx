@@ -17,7 +17,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: readonly NavItem[] = [
-  { href: '/', labelKey: 'home', icon: Home, match: (p) => p === '/' },
+  { href: '/app', labelKey: 'home', icon: Home, match: (p) => p === '/app' },
   { href: '/projects', labelKey: 'projects', icon: FolderOpen, match: (p) => p.startsWith('/projects') },
   { href: '/history', labelKey: 'history', icon: Clock, match: (p) => p.startsWith('/history') },
   { href: '/profile', labelKey: 'profile', icon: User, match: (p) => p.startsWith('/profile') },
@@ -33,7 +33,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-14 w-full max-w-5xl items-center gap-6 px-4">
-          <Link href="/" className="flex items-center gap-2 font-semibold text-primary" aria-label={t('appName')}>
+          <Link href="/app" className="flex items-center gap-2 font-semibold text-primary" aria-label={t('appName')}>
             <BrandMark />
             <span className="text-lg tracking-tight">{t('appName')}</span>
           </Link>
@@ -52,6 +52,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                 {label}
               </Link>
             ))}
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            >
+              Landing
+            </Link>
           </nav>
         </div>
       </header>

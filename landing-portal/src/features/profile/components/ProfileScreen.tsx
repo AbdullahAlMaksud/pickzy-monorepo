@@ -1,6 +1,7 @@
 'use client';
 
-import { WifiOff } from 'lucide-react';
+import Link from 'next/link';
+import { Globe, ShieldCheck, WifiOff } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -94,6 +95,29 @@ export function ProfileScreen() {
             <p className="font-semibold">{t('offline.title')}</p>
             <p className="text-sm text-muted-foreground">{t('offline.message')}</p>
           </div>
+        </div>
+
+        <div className="mt-4 flex flex-col gap-2 pt-2 border-t">
+          <Link
+            href="/"
+            className="flex items-center justify-between rounded-lg p-2 text-sm font-medium transition-colors hover:bg-muted"
+          >
+            <span className="flex items-center gap-2">
+              <Globe className="size-4 text-muted-foreground" aria-hidden />
+              <span>Landing Page</span>
+            </span>
+            <span className="text-xs text-muted-foreground">/</span>
+          </Link>
+          <Link
+            href="/privacy"
+            className="flex items-center justify-between rounded-lg p-2 text-sm font-medium transition-colors hover:bg-muted"
+          >
+            <span className="flex items-center gap-2">
+              <ShieldCheck className="size-4 text-muted-foreground" aria-hidden />
+              <span>Privacy Policy</span>
+            </span>
+            <span className="text-xs text-muted-foreground">/privacy</span>
+          </Link>
         </div>
       </ProfileSection>
     </div>

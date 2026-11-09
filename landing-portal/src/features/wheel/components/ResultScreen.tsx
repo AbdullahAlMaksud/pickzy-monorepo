@@ -60,7 +60,7 @@ export function ResultScreen({ drawId }: { drawId: number }) {
           </Link>
         </Button>
         <Button asChild variant="outline">
-          <Link href="/">
+          <Link href="/app">
             <Home aria-hidden />
             {t('wheel:result.home')}
           </Link>

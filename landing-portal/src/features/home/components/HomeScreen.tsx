@@ -42,7 +42,7 @@ export function HomeScreen() {
             {greeting}
           </p>
           <h1 className="text-3xl font-bold tracking-tight text-primary">{t('common:appName')}</h1>
-          <p className="text-muted-foreground">{t('home:tagline')} 🎉</p>
+          <p className="text-muted-foreground">{t('home:tagline')}</p>
         </div>
         <Link href="/profile" aria-label={t('home:openProfile')} data-testid="home-avatar">
           <PersonAvatar name={profile.displayName} imageUrl={profile.photoDataUrl} colorIndex={0} className="size-12" />

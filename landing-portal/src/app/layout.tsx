@@ -8,12 +8,17 @@ export const metadata: Metadata = {
   title: { default: 'Pickzy', template: '%s · Pickzy' },
   description: 'Offline-first random winner picker. Add names, spin the wheel, keep a history of every draw.',
   applicationName: 'Pickzy',
+  icons: {
+    icon: '/images/icon.png',
+    shortcut: '/images/icon.png',
+    apple: '/images/icon.png',
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#17151f' },
+    { media: '(prefers-color-scheme: dark)', color: '#020617' },
   ],
   width: 'device-width',
   initialScale: 1,
