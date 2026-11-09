@@ -26,9 +26,10 @@ import {
 } from 'lucide-react';
 import { BrandMark } from '@/components/shared/BrandMark';
 import { Button } from '@/components/ui/button';
+import { readableTextColor } from '@/lib/color';
 
-const DEMO_NAMES = ['Sophia', 'Alex', 'Fatima', 'Liam', 'Zainab', 'Noah'];
-const DEMO_COLORS = ['#0f172a', '#334155', '#475569', '#64748b', '#1e293b', '#020617'];
+const DEMO_NAMES = ['Ayesha', 'Tanvir', 'Nusrat', 'Rahim', 'Fatima', 'Farhan'];
+const DEMO_COLORS = ['#8B6CF6', '#F7B93E', '#3FCB8B', '#F2557A', '#3C9DFF', '#FF8D5C'];
 
 export function LandingPage() {
   const [spinning, setSpinning] = useState(false);
@@ -50,9 +51,10 @@ export function LandingPage() {
 
     const sliceAngle = 360 / DEMO_NAMES.length;
     const randomIndex = Math.floor(Math.random() * DEMO_NAMES.length);
-    // Extra 5 full rotations + offset for the selected slice
-    const targetSliceRotation = 360 * 5 + (360 - randomIndex * sliceAngle - sliceAngle / 2);
-    const newTotalRotation = wheelRotation + targetSliceRotation;
+    const targetAngle = (randomIndex + 0.5) * sliceAngle;
+    const currentMod = wheelRotation % 360;
+    const delta = ((360 - ((targetAngle + currentMod) % 360)) + 360) % 360;
+    const newTotalRotation = wheelRotation + 360 * 5 + delta;
 
     setWheelRotation(newTotalRotation);
 
@@ -62,10 +64,10 @@ export function LandingPage() {
       setWinner(chosen);
       try {
         confetti({
-          particleCount: 60,
-          spread: 70,
+          particleCount: 80,
+          spread: 80,
           origin: { y: 0.6 },
-          colors: ['#0f172a', '#334155', '#64748b', '#94a3b8'],
+          colors: [...DEMO_COLORS],
         });
       } catch {
         // Safe fallback if confetti canvas cannot load
@@ -224,11 +226,11 @@ export function LandingPage() {
             <div className="relative flex flex-col items-center justify-center p-6 rounded-2xl border border-slate-300 bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:border-slate-400">
               {/* Top pointer marker */}
               <div className={`z-20 -mb-3 flex flex-col items-center transition-transform duration-100 ${spinning ? 'scale-110 -rotate-6' : ''}`}>
-                <div className="h-0 w-0 border-x-8 border-x-transparent border-t-[16px] border-t-slate-950 drop-shadow-sm" />
+                <div className="h-0 w-0 border-x-8 border-x-transparent border-t-[16px] border-t-rose-500 drop-shadow-md" />
               </div>
 
               {/* The Spinning Wheel */}
-              <div className="relative size-64 sm:size-72 flex items-center justify-center overflow-hidden rounded-full border-4 border-slate-950 shadow-inner">
+              <div className="relative size-64 sm:size-72 flex items-center justify-center overflow-hidden rounded-full border-4 border-slate-900 shadow-xl">
                 <svg
                   viewBox="0 0 100 100"
                   className="size-full transition-transform ease-out"
@@ -242,35 +244,34 @@ export function LandingPage() {
                   {DEMO_NAMES.map((name, i) => {
                     const count = DEMO_NAMES.length;
                     const angle = 360 / count;
-                    const startAngle = (i * angle - 90) * (Math.PI / 180);
-                    const endAngle = ((i + 1) * angle - 90) * (Math.PI / 180);
-                    const x1 = 50 + 50 * Math.cos(startAngle);
-                    const y1 = 50 + 50 * Math.sin(startAngle);
-                    const x2 = 50 + 50 * Math.cos(endAngle);
-                    const y2 = 50 + 50 * Math.sin(endAngle);
-
-                    const textAngle = i * angle + angle / 2;
-                    const rad = textAngle * (Math.PI / 180);
-                    const tx = 50 + 32 * Math.cos(rad);
-                    const ty = 50 + 32 * Math.sin(rad);
+                    const centerAngle = (i + 0.5) * angle;
+                    const startRad = (i * angle - 90) * (Math.PI / 180);
+                    const endRad = ((i + 1) * angle - 90) * (Math.PI / 180);
+                    const x1 = 50 + 50 * Math.cos(startRad);
+                    const y1 = 50 + 50 * Math.sin(startRad);
+                    const x2 = 50 + 50 * Math.cos(endRad);
+                    const y2 = 50 + 50 * Math.sin(endRad);
+                    const fill = DEMO_COLORS[i % DEMO_COLORS.length];
+                    const textColor = readableTextColor(fill);
 
                     return (
                       <g key={name}>
                         <path
                           d={`M 50 50 L ${x1} ${y1} A 50 50 0 0 1 ${x2} ${y2} Z`}
-                          fill={DEMO_COLORS[i % DEMO_COLORS.length]}
+                          fill={fill}
                           stroke="#ffffff"
-                          strokeWidth="1"
+                          strokeWidth="1.2"
                         />
                         <text
-                          x={tx}
-                          y={ty}
-                          fill="#ffffff"
-                          fontSize="5.5"
-                          fontWeight="700"
-                          textAnchor="middle"
+                          transform={`rotate(${centerAngle - 90} 50 50)`}
+                          x="87"
+                          y="50"
+                          textAnchor="end"
                           dominantBaseline="central"
-                          transform={`rotate(${textAngle + 90}, ${tx}, ${ty})`}
+                          fill={textColor}
+                          fontSize="5.2"
+                          fontWeight="700"
+                          letterSpacing="0.02em"
                         >
                           {name}
                         </text>
@@ -278,6 +279,7 @@ export function LandingPage() {
                     );
                   })}
                   <circle cx="50" cy="50" r="8" fill="#ffffff" stroke="#0f172a" strokeWidth="2" />
+                  <circle cx="50" cy="50" r="3.5" fill="#0f172a" />
                 </svg>
               </div>
 
@@ -296,7 +298,7 @@ export function LandingPage() {
                 {/* Winner Card */}
                 {winner && (
                   <div className="animate-in fade-in zoom-in-95 duration-200 mt-2 flex items-center gap-3 rounded-xl border border-slate-300 bg-slate-100 px-4 py-2 text-slate-900 shadow-xs">
-                    <Trophy className="size-5 text-slate-950" />
+                    <Trophy className="size-5 text-amber-500" />
                     <div>
                       <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Selected Winner</span>
                       <p className="text-base font-bold text-slate-950">{winner} (1st Place)</p>
