@@ -36,6 +36,9 @@ export function PrivacyPage() {
                 <span>Home</span>
               </Link>
             </Button>
+            <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex border-slate-300 text-slate-800 hover:bg-slate-100">
+              <Link href="/terms">Terms of Service</Link>
+            </Button>
             <Button asChild size="sm" className="bg-slate-950 text-white hover:bg-slate-800">
               <Link href="/app">Open Web App</Link>
             </Button>
@@ -249,12 +252,17 @@ export function PrivacyPage() {
 
         {/* Bottom CTA / Return Links */}
         <div className="mt-14 border-t border-slate-200 pt-8 flex flex-wrap items-center justify-between gap-4">
-          <Button asChild variant="outline" className="border-slate-300 text-slate-800 hover:bg-slate-50">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <ArrowLeft className="size-4" />
-              <span>Back to Home</span>
-            </Link>
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button asChild variant="outline" className="border-slate-300 text-slate-800 hover:bg-slate-50">
+              <Link href="/" className="inline-flex items-center gap-2">
+                <ArrowLeft className="size-4" />
+                <span>Back to Home</span>
+              </Link>
+            </Button>
+            <Button asChild variant="ghost" className="text-slate-600 hover:text-slate-950">
+              <Link href="/terms">Terms of Service</Link>
+            </Button>
+          </div>
 
           <Button asChild className="bg-slate-950 text-white hover:bg-slate-800">
             <Link href="/app">Open Web Portal</Link>

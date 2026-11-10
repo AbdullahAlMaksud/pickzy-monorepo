@@ -113,6 +113,9 @@ export function LandingPage() {
             <Link href="/privacy" className="transition-colors hover:text-slate-950">
               Privacy
             </Link>
+            <Link href="/terms" className="transition-colors hover:text-slate-950">
+              Terms
+            </Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -704,6 +707,9 @@ export function LandingPage() {
             </Link>
             <Link href="/privacy" className="hover:text-slate-950">
               Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-slate-950">
+              Terms of Service
             </Link>
             <a
               href="https://github.com/AbdullahAlMaksud/pickzy-monorepo"
